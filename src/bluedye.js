@@ -3,8 +3,8 @@
  * by Yazid SLILA (@yokgs)
  * under MIT License
  */
-"use strict";
-(function () {
+ (function(r, e) { typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = e() : typeof define === 'function' && define.amd ? define(e) : (r.bluedye = e()); }(this, (function() {
+    'use strict';
     var rgb = (r, g, b) => [r, g, b];
     var bluedye = function (color) {
         return new bluedye.y.color(color);
@@ -59,4 +59,4 @@
         },
     }
     window.bluedye = bluedye;
-}())
+})));

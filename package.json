@@ -1,0 +1,26 @@
+{
+  "name": "bluedyejs",
+  "version": "1.0.0",
+  "description": "Lightweight javascript library for color manipulations.",
+  "main": "src/bluedye.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yokgs/BlueDyeJS.git"
+  },
+  "keywords": [
+    "color",
+    "rgb",
+    "rgba",
+    "grayscale",
+    "bluedye"
+  ],
+  "author": "Yazid SLILA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yokgs/BlueDyeJS/issues"
+  },
+  "homepage": "https://github.com/yokgs/BlueDyeJS#readme"
+}

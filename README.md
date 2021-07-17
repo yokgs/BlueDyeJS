@@ -1,2 +1,2 @@
 # BlueDyeJS
-Lightweight  javascript library for color manipulations.
+Lightweight javascript library for color manipulations.
