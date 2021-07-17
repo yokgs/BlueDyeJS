@@ -1,5 +1,5 @@
 {
-  "name": "bluedyejs",
+  "name": "@yokgs/bluedyejs",
   "version": "1.0.0",
   "description": "Lightweight javascript library for color manipulations.",
   "main": "src/bluedye.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yokgs/BlueDyeJS.git"
+    "url": "git://github.com/yokgs/BlueDyeJS.git"
   },
   "keywords": [
     "color",
