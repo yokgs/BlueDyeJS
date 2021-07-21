@@ -46,17 +46,18 @@
         redToBlue: function () {
             let t = this.RED;
             this.RED = this.GREEN;
-            thi.GREEN = this.BLUE;
+            this.GREEN = this.BLUE;
             this.BLUE = t;
             return this;
         },
         blueToRed: function () {
             let t = this.BLUE;
             this.BLUE = this.GREEN;
-            thi.GREEN = this.RED;
+            this.GREEN = this.RED;
             this.RED = t;
             return this;
         },
     }
-    window.bluedye = bluedye;
+    bluedye.y.color.prototype=bluedye.y;
+    return bluedye;
 })));
