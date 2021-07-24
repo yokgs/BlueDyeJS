@@ -1,7 +1,7 @@
 /**
  * BlueDyeJS v1.1.0
  * by Yazid SLILA (@yokgs)
- * under MIT License
+ * MIT License
  */
 (function (r, e) { typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = e() : typeof define === 'function' && define.amd ? define(e) : (r.bluedye = e()); }(this, (function () {
     'use strict';
