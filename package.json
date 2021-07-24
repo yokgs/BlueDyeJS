@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git://github.com/yokgs/BlueDyeJS.git"
   },
-  "publishConfig":{
-    "registry":"https://npm.pkg.github.com"
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "keywords": [
     "color",
