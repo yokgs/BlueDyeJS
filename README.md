@@ -6,15 +6,13 @@ Lightweight javascript library for color manipulations.
 
 ```javascript
     let color = bluedye('rgb(0,0,255)'), // red
-    defaultColor = bluedye(); // black
+        defaultColor = bluedye(), // black
+        transparent = bluedye().alpha(0),
+        randomColor = bluedye().random();
 ```
 
 ## Intallation
 
 ```
-    <script src="https://unpkg.com/@yokgs/bluedye"></script>
-```
-
-```
-    npm install @yokgs/bluedye
+    $ npm install @yokgs/bluedye
 ```

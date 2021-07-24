@@ -1,6 +1,6 @@
 {
   "name": "@yokgs/bluedyejs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Lightweight javascript library for color manipulations.",
   "main": "src/bluedye.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "bluedye"
   ],
   "author": "yokgs",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/yokgs/BlueDyeJS/issues"
   },
