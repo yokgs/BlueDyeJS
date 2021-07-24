@@ -66,6 +66,6 @@
             return `rgb(${this.RED},${this.GREEN},${this.BLUE})`;
         }
     }
-    bluedye.y.color.prototype = bluedye.y;
+    bluedye.y.color.prototype = bluedye.y
     return bluedye;
 })));
