@@ -54,12 +54,26 @@ BDAssert(color.blueToRed().css(), 'rgb(32,10,21)');
 
 BDAssert(color.gray().css(), 'rgb(21,21,21)');
 
+color.setTag('myColor');
+
+var sameColor=bluedye.getColor('myColor');
+
+BDAssert(color.hex(),sameColor.hex());
+
+color.random();
+BDAssert(color.hex(),sameColor.hex());
+sameColor.random();
+BDAssert(color.hex(),sameColor.hex());
+
+sameColor.setTag('BD12');
+
+BDAssert(bluedye.getColor('myColor'),undefined); //why? myColor tag is replaced by BD12
+
 var colorNumber=color.random().number(); //random number 
 
-BDAssert(bluedye(colorNumber).number(),colorNumber);
+BDAssert(bluedye(colorNumber).number(),colorNumber); // output === input 
 
 BDAssert(bluedye(true).hex(),'#ffffff');
-BDAssert(bluedye(false).css(),'rgb(0,0,0)');
-
-
+BDAssert(bluedye(false).setTag('black').css(),'rgb(0,0,0)');
+BDAssert(bluedye([67,89,90]).css(),"rgb(67,89,90)")
 console.log("Test passed!")

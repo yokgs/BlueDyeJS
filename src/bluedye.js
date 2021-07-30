@@ -1,5 +1,5 @@
 /**
- * BlueDyeJS v1.2.0
+ * BlueDyeJS v1.3.0
  * by Yazid SLILA (@yokgs)
  * MIT License
  */
@@ -9,9 +9,14 @@
         rgba = (r, g, b, a) => [r, g, b, a],
         Hex = a => ((a > 15 ? '' : '0') + Math.floor(a).toString(16)),
         fromHex = a => {
+            if (a.length == 4) return parseInt(a[1] + a[1] + a[2] + a[2] + a[3] + a[3], 16) * 17;
             return parseInt(a.substr(1), 16);
         },
-        correction = a => Math.max(0, Math.min(Math.round(a), 255));
+        correction = a => Math.max(0, Math.min(Math.round(a), 255)),
+        aCorrection=a=> Math.max(Math.min(a, 1), 0);
+    var _dark = (a, b) => (1 - b / 10) * a,
+        _light = (a, b) => (a + (1 - b / 10) * (255 - a));
+
     var bluedye = function (color) {
         return new bluedye.y.color(color);
     };
@@ -35,11 +40,17 @@
                     color /= 256;
                 }
             }
+            if(typeof color=='object'&&color.length){
+                s=color;
+                if(s.length==3)s[3]=1;
+                else if(s.length<3)s=[0,0,0,0];
+            }
             if (typeof color == 'boolean' && color) s = [255, 255, 255, 1];
             this.RED = correction(s[0]);
             this.GREEN = correction(s[1]);
             this.BLUE = correction(s[2]);
-            this.ALPHA = s[3];
+            this.ALPHA = aCorrection(s[3]);
+            this.tag=null;
             return this;
         },
         red: function (red) {
@@ -55,7 +66,7 @@
             return this;
         },
         alpha: function (alpha) {
-            this.ALPHA = Math.max(Math.min(alpha, 1), 0);
+            if (typeof alpha == 'number') this.ALPHA = Math.max(Math.min(alpha, 1), 0);
             return this;
         },
         rgb: function (r, g, b) {
@@ -63,6 +74,19 @@
         },
         rgba: function (r, g, b, a) {
             return this.rgb(r, g, b).alpha(a);
+        },
+
+        dark: function (level = 1) {
+            level = Math.min(Math.max (level,0), 10);
+            this.RED = _dark(this.RED, level);
+            this.GREEN = _dark(this.GREEN, level);
+            this.BLUE = _dark(this.BLUE, level);
+        },
+        light: function (level = 1) {
+            level = Math.min(Math.max (level,0), 10);
+            this.RED = _light(this.RED, level);
+            this.GREEN = _light(this.GREEN, level);
+            this.BLUE = _light(this.BLUE, level);
         },
         negative: function () {
             this.RED = 255 - this.RED;
@@ -108,6 +132,12 @@
         number: function () {
             return ((this.RED * 256) + this.GREEN) * 256 + this.BLUE;
         },
+        setTag:function(tag){
+            if(this.tag)delete _secureStore[this.tag];
+            _secureStore[tag]=this;
+            this.tag=tag;
+            return this;
+        },
     }
     bluedye.y.color.prototype = bluedye.y;
     bluedye.add = function (obj, mode = "write") {
@@ -117,9 +147,13 @@
         }
         return bluedye;
     };
+    let _secureStore={};
     bluedye.add({
-        version: [1, 2, 0],
+        version: [1, 3, 0],
         alpha: false,
+        getColor:function(tag){
+            return _secureStore[tag];
+        }
     })
     return bluedye;
 })));
