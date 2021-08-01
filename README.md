@@ -14,5 +14,5 @@ Lightweight javascript library for color manipulations.
 ## Intallation
 
 ```
-    $ npm install @yokgs/bluedye
+    $ npm install yokgs/bluedyejs
 ```
