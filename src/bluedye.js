@@ -1,5 +1,5 @@
 /**
- * BlueDyeJS v1.2.0
+ * BlueDyeJS v1.2.1
  * by Yazid SLILA (@yokgs)
  * MIT License
  */
@@ -11,11 +11,12 @@
         fromHex = a => {
             return parseInt(a.substr(1), 16);
         },
-        correction = a => Math.max(0, Math.min(Math.round(a), 255));
+        correction = a => Math.max(0, Math.min(Math.round(a), 255)),
+        alpha_correction=a=>Math.max(0, Math.min(Math.abs(a), 1));
     var bluedye = function (color) {
-        return new bluedye.y.color(color);
+        return new localBlueDye.color(color);
     };
-    bluedye.y = bluedye.prototype = {
+    let localBlueDye = bluedye.prototype = {
         color: function (color) {
             //default values
             var s = [0, 0, 0, 1];
@@ -39,7 +40,7 @@
             this.RED = correction(s[0]);
             this.GREEN = correction(s[1]);
             this.BLUE = correction(s[2]);
-            this.ALPHA = s[3];
+            this.ALPHA = alpha_correction(s[3]);
             return this;
         },
         red: function (red) {
@@ -55,7 +56,7 @@
             return this;
         },
         alpha: function (alpha) {
-            this.ALPHA = Math.max(Math.min(alpha, 1), 0);
+            this.ALPHA = alpha_correction(alpha);
             return this;
         },
         rgb: function (r, g, b) {
@@ -109,16 +110,16 @@
             return ((this.RED * 256) + this.GREEN) * 256 + this.BLUE;
         },
     }
-    bluedye.y.color.prototype = bluedye.y;
-    bluedye.add = function (obj, mode = "write") {
+    localBlueDye.color.prototype = localBlueDye;
+    bluedye.add = function (obj, overwrite) {
         for (let k in obj) {
-            var t = k in bluedye ? mode == "overwrite" : mode == "write";
+            var t = k in bluedye ? overwrite : !overwrite;
             if (t) bluedye[k] = obj[k];
         }
         return bluedye;
     };
     bluedye.add({
-        version: [1, 2, 0],
+        version: [1, 2, 1],
         alpha: false,
     })
     return bluedye;
