@@ -121,6 +121,9 @@
     bluedye.add({
         version: [1, 2, 1],
         alpha: false,
+        rgb:function(r,g,b){
+            return bluedye(`rgb(${r},${g},${b})`
+        }
     })
     return bluedye;
 })));
