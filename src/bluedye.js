@@ -13,7 +13,7 @@
             return parseInt(a.substr(1), 16);
         },
         correction = a => Math.max(0, Math.min(Math.round(a), 255)),
-        alpha_correction = a => Math.max(0, Math.min(Math.abs(a), 1));
+        alpha_correction = a => Math.max(0, Math.min(a, 1));
     var _dark = (a, b) => (1 - b / 10) * a,
         _light = (a, b) => (a + (1 - b / 10) * (255 - a));
 
