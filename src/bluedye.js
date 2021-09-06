@@ -75,18 +75,19 @@
         rgba: function (r, g, b, a) {
             return this.rgb(r, g, b).alpha(a);
         },
-
         dark: function (level = 1) {
             level = Math.min(Math.max(level, 0), 10);
             this.RED = _dark(this.RED, level);
             this.GREEN = _dark(this.GREEN, level);
             this.BLUE = _dark(this.BLUE, level);
+            return this;
         },
         light: function (level = 1) {
             level = Math.min(Math.max(level, 0), 10);
             this.RED = _light(this.RED, level);
             this.GREEN = _light(this.GREEN, level);
             this.BLUE = _light(this.BLUE, level);
+            return this;
         },
         negative: function () {
             this.RED = 255 - this.RED;
