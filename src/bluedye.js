@@ -156,6 +156,9 @@
         },
         rgb: function (r, g, b) {
             return bluedye(`rgb(${r},${g},${b})`);
+        },
+        rgba: function (r, g, b, a) {
+            return bluedye(`rgba(${r},${g},${b},${a})`);
         }
     })
     return bluedye;
