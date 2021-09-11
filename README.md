@@ -53,12 +53,12 @@ Number (0 ... 16777215) | rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1)
     a.setTag('red');
     a = 0; // oops our color is gone :(
     // do not worry we can recover it
-    var b = bluedye.getByTag('red');
+    var b = bluedye.getColor('my-color');
     b.RED // 88 
     b.BLUE // 11
     b.green(30);
     b.GREEN // 30
-    var c = bluedye.getByTag('red');
+    var c = bluedye.getColor('my-color');
     c.GREEN // 30  color is automatically updated
     c.red(255);
     c.RED // 255
