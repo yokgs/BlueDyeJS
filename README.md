@@ -16,16 +16,40 @@ Lightweight javascript library for color manipulations.
 
 ### Supported arguments
 
-input  | equivalent
---- | ---
-undefined | rgba(0, 0, 0, 0)
-null | rgba(0, 0, 0, 0)
-'' | rgba(0, 0, 0, 0)
-false | rgba(0, 0, 0, 1)
-true | rgba(255, 255, 255, 1)
-rgb(0, 0, 0) ... rgb(255, 255, 255) |  rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1)
-Number (0 ... 16777215) | rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1)
-
+<table>
+    <tr>
+        <td>input</td>
+        <td>equivalent</td>
+    </tr>
+    <tr>
+        <td>undefined</td>
+        <td>rgba(0, 0, 0, 0)</td>
+    </tr>
+    <tr>
+        <td>null</td>
+        <td>rgba(0, 0, 0, 0)</td>
+    </tr>
+    <tr>
+        <td>''</td>
+        <td>rgba(0, 0, 0, 0)</td>
+    </tr>
+    <tr>
+        <td>false</td>
+        <td>rgba(0, 0, 0, 1)</td>
+    </tr>
+    <tr>
+        <td>true</td>
+        <td>rgba(255, 255, 255, 1)</td>
+    </tr>
+    <tr>
+        <td>rgb(0, 0, 0) ... rgb(255, 255, 255)</td>
+        <td>rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1)</td>
+    <tr>
+    <tr>
+        <td>Number (0 ... 16777215)<td>
+        <td> rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1)</td>
+    <tr>
+</table>
 
 
 ### Export color object as 
