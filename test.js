@@ -76,4 +76,5 @@ BDAssert(bluedye(colorNumber).number(),colorNumber); // output === input
 BDAssert(bluedye(true).hex(),'#ffffff');
 BDAssert(bluedye(false).setTag('black').css(),'rgb(0,0,0)');
 BDAssert(bluedye([67,89,90]).css(),"rgb(67,89,90)")
+
 console.log("Test passed!")
