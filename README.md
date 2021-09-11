@@ -19,10 +19,9 @@ Lightweight javascript library for color manipulations.
 input  | equivalent
 --- | ---
 undefined | rgba(0,0,0,0)
---- | ---
 null | rgba(0,0,0,0)
---- | ---
 Number (0...16777215) | rgba(0,0,0,1)...rgba(255,255,255,1)
+
 
 
 ### Export color object as 
