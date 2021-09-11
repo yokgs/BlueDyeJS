@@ -16,12 +16,12 @@ Lightweight javascript library for color manipulations.
 
 ### Supported arguments
 
-|  input  | equivalent |
-____
-|undefined | rgba(0,0,0,0)|
-____
+input  | equivalent
+--- | ---
+undefined | rgba(0,0,0,0)
+--- | ---
 null | rgba(0,0,0,0)
-____
+--- | ---
 Number (0...16777215) | rgba(0,0,0,1)...rgba(255,255,255,1)
 
 
