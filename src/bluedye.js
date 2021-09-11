@@ -1,5 +1,5 @@
 /**
- * BlueDyeJS v1.2.1
+ * BlueDyeJS v1.3.0
  * by Yazid SLILA (@yokgs)
  * MIT License
  */
@@ -14,8 +14,8 @@
         },
         correction = a => Math.max(0, Math.min(Math.round(a), 255)),
         alpha_correction = a => Math.max(0, Math.min(a, 1));
-    var _dark = (a, b) => (1 - b / 10) * a,
-        _light = (a, b) => (a + (1 - b / 10) * (255 - a));
+    var _dark = (a, b) => (1 - b / 100) * a,
+        _light = (a, b) => (a + (1 - b / 100) * (255 - a));
 
     var bluedye = function (color) {
         return new localBlueDye.color(color);
@@ -29,9 +29,14 @@
                 if (/^#[0-1a-fA-F]+/.test(color)) {
                     color = fromHex(color);
                 } else {
-                    try {
-                        s = eval(color);
-                    } catch (_) { };
+                    if (color in _private.colors) {
+                        return bluedye(_private.colors[color]);
+                    }
+                    if (/^rgba*([\d,\.\s]+)/.test(color)) {
+                        let rgb = (r, g, b) => [r, g, b, 1],
+                            rgba = (r, g, b, a) => [r, g, b, a];
+                        try { s = eval(color) } catch (_) { };
+                    }
                 }
             }
             if (typeof color == "number") {
@@ -43,6 +48,7 @@
             if (typeof color == 'object' && color.length) {
                 s = color;
                 if (s.length == 3) s[3] = 1;
+                else if (s.length === 1) return bluedye.grayscale(s[0]);
                 else if (s.length < 3) s = [0, 0, 0, 0];
             }
             if (typeof color == 'boolean' && color) s = [255, 255, 255, 1];
@@ -76,14 +82,14 @@
             return this.rgb(r, g, b).alpha(a);
         },
         dark: function (level = 1) {
-            level = Math.min(Math.max(level, 0), 10);
+            level = Math.min(Math.max(level, 0), 100);
             this.RED = _dark(this.RED, level);
             this.GREEN = _dark(this.GREEN, level);
             this.BLUE = _dark(this.BLUE, level);
             return this;
         },
         light: function (level = 1) {
-            level = Math.min(Math.max(level, 0), 10);
+            level = Math.min(Math.max(level, 0), 100);
             this.RED = _light(this.RED, level);
             this.GREEN = _light(this.GREEN, level);
             this.BLUE = _light(this.BLUE, level);
@@ -110,7 +116,7 @@
             return this;
         },
         gray: function () {
-            var y = Math.floor((this.RED + this.GREEN + this.BLUE) / 3);
+            var y = (this.RED + this.GREEN + this.BLUE) / 3;
             this.RED = this.GREEN = this.BLUE = y;
             return this;
         },
@@ -134,11 +140,17 @@
             return ((this.RED * 256) + this.GREEN) * 256 + this.BLUE;
         },
         setTag: function (tag) {
-            if (this.tag) delete _secureStore[this.tag];
-            _secureStore[tag] = this;
+            if (this.tag) delete _private.tags[this.tag];
+            _private.tags[tag] = this;
             this.tag = tag;
             return this;
         },
+        name: function (name) {
+            if (/[\w\-]+/.test(name)) {
+                _private.colors[name] = this.css();
+            }
+            return this;
+        }
     }
     localBlueDye.color.prototype = localBlueDye;
     bluedye.add = function (obj, overwrite) {
@@ -148,22 +160,32 @@
         }
         return bluedye;
     };
-    let _secureStore = {};
+    let _private = {
+        colors: {},
+        tags: {}
+    };
     bluedye.add({
-        version: [1, 2, 1],
+        version: [1, 3, 0],
         alpha: false,
         getColor: function (tag) {
-            if(tag in _secureStore){
-                return _secureStore[tag];
-            }
-            return bluedye().setTag(tag);
+            return _private.tags[tag];
         },
         rgb: function (r, g, b) {
             return bluedye(`rgb(${r},${g},${b})`);
         },
         rgba: function (r, g, b, a) {
             return bluedye(`rgba(${r},${g},${b},${a})`);
-        }
+        },
+        name: function (name) {
+            return _private.colors[name];
+        },
+        grayscale: function (a) {
+            return bluedye.rgb(a, a, a);
+        },
+        random: function () {
+            return bluedye().random();
+        },
+
     })
     return bluedye;
 })));

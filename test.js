@@ -67,7 +67,7 @@ BDAssert(color.hex(),sameColor.hex());
 
 sameColor.setTag('BD12');
 
-BDAssert(bluedye.getColor('myColor'),undefined); //why? myColor tag is replaced by BD12
+BDAssert(bluedye.getColor('myColor'),undefined); //why? myColor tag is replaced with BD12
 
 var colorNumber=color.random().number(); //random number 
 
