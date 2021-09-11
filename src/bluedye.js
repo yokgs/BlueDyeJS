@@ -153,7 +153,10 @@
         version: [1, 2, 1],
         alpha: false,
         getColor: function (tag) {
-            return _secureStore[tag];
+            if(tag in _secureStore){
+                return _secureStore[tag];
+            }
+            return bluedye().setTag(tag);
         },
         rgb: function (r, g, b) {
             return bluedye(`rgb(${r},${g},${b})`);
