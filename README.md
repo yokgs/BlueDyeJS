@@ -50,7 +50,7 @@ Number (0 ... 16777215) | rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1)
     var a = bluedye().red(88).blue(11);
     a.RED // 88
     a.BLUE // 11
-    a.setTag('red');
+    a.setTag('my-color');
     a = 0; // oops our color is gone :(
     // do not worry we can recover it
     var b = bluedye.getColor('my-color');
