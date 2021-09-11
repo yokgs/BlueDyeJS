@@ -45,6 +45,26 @@ Number (0 ... 16777215) | rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1)
     black.number() // 0
 ```
 
+### Tags
+```javascript
+    var a = bluedye().red(88).blue(11);
+    a.RED // 88
+    a.BLUE // 11
+    a.setTag('red');
+    a = 0; // oops our color is gone :(
+    // do not worry we can recover it
+    var b = bluedye.getByTag('red');
+    b.RED // 88 
+    b.BLUE // 11
+    b.green(30);
+    b.GREEN // 30
+    var c = bluedye.getByTag('red');
+    c.GREEN // 30  color is automatically updated
+    c.red(255);
+    c.RED // 255
+    b.RED // 255 too (b and c represent this same color)
+```
+
 ## Intallation
 
 ```
