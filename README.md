@@ -20,9 +20,11 @@ input  | equivalent
 --- | ---
 undefined | rgba(0, 0, 0, 0)
 null | rgba(0, 0, 0, 0)
+'' | rgba(0, 0, 0, 0)
 false | rgba(0, 0, 0, 1)
 true | rgba(255, 255, 255, 1)
-Number (0...16777215) | rgba(0, 0, 0, 1)...rgba(255, 255, 255, 1)
+rgb(0, 0, 0) ... rgb(255, 255, 255) |  rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1)
+Number (0 ... 16777215) | rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1)
 
 
 
