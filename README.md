@@ -59,10 +59,10 @@ Number (0 ... 16777215) | rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1)
     b.green(30);
     b.GREEN // 30
     var c = bluedye.getColor('my-color');
-    c.GREEN // 30  color is automatically updated
+    c.GREEN // 30 (my-color is automatically updated)
     c.red(255);
     c.RED // 255
-    b.RED // 255 too (b and c represent this same color)
+    b.RED // 255 too (b and c represent the same color)
 ```
 
 ## Intallation
