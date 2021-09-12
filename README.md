@@ -47,24 +47,23 @@ Lightweight javascript library for color manipulations.
     <tr>
         <td>rgb(0, 0, 0) ... rgb(255, 255, 255)</td>
         <td>rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1)</td>
-    <tr>
+    </tr>
     <tr>
         <td>Number (0 ... 16777215)<td>
         <td> rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1)</td>
-    <tr>
+    </tr>
     <tr>
         <td>[n] ([0] ... [255])<td>
         <td> rgba(n, n, n, 1) (rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1))</td>
-    <tr>
+    </tr>
     <tr>
         <td>[r, g, b] ([0, 0, 0] ... [255, 255, 255])<td>
         <td> rgba(r, g, b, 1) (rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1))</td>
-    <tr>
+    </tr>
     <tr>
         <td>[r, g, b, a] ([0, 0, 0, 0] ... [255, 255, 255, 1])<td>
         <td> rgba(r, g, b, a) (rgba(0, 0, 0, 0) ... rgba(255, 255, 255, 1))</td>
-    <tr>
-
+    </tr>
 </table>
 
 
