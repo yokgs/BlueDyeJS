@@ -2,7 +2,7 @@
 
 Lightweight javascript library for color manipulations.
 
-> **Try Our [Demo](#Demo)**
+> **Try Our [Demo](#demo)**
 
 ![1.3.0](https://img.shields.io/github/package-json/v/yokgs/BlueDyeJS?color=%23118cff&style=for-the-badge)
 ![MIT](https://img.shields.io/github/license/yokgs/BlueDyeJS?color=%23007bff&style=for-the-badge)
