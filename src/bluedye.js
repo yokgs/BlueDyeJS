@@ -1,5 +1,5 @@
 /**
- * BlueDyeJS v1.3.0
+ * BlueDyeJS v1.3.1
  * by Yazid SLILA (@yokgs)
  * MIT License
  */
@@ -163,7 +163,7 @@
         tags: {}
     };
     bluedye.add({
-        version: [1, 3, 0],
+        version: [1, 3, 1],
         alpha: false,
         getColor: function (tag) {
             return _private.tags[tag];
