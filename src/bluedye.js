@@ -32,7 +32,7 @@
                     if (color in _private.colors) {
                         return bluedye(_private.colors[color]);
                     }
-                    if (/^rgba*([\d,\.\s]+)/.test(color)) {
+                    if (/^rgba*\([\d,\.\s]+\)/.test(color)) {
                         let rgb = (r, g, b) => [r, g, b, 1],
                             rgba = (r, g, b, a) => [r, g, b, a];
                         try { s = eval(color) } catch (_) { };
@@ -53,7 +53,7 @@
             this.RED = correction(s[0]);
             this.GREEN = correction(s[1]);
             this.BLUE = correction(s[2]);
-            this.ALPHA = alpha_correction(typeof s[3] != 'number' ? 1 : 0);
+            this.ALPHA = alpha_correction(typeof s[3] != 'number' ? 1 : s[3]);
             this.tag = null;
             return this;
         },

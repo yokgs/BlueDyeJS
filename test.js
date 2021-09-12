@@ -1,4 +1,4 @@
-const bluedye = require('./src/bluedye.js');
+const bluedye = require('./src/bluedye.min.js');
 
 var BDAssert = function (tested, expected) {
     if (tested !== expected) {
