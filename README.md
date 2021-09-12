@@ -5,6 +5,17 @@ Lightweight javascript library for color manipulations.
 ![1.3.0](https://img.shields.io/github/package-json/v/yokgs/BlueDyeJS?color=%23118cff&style=for-the-badge)
 
 ![MIT](https://img.shields.io/github/license/yokgs/BlueDyeJS?color=%23007bff&style=for-the-badge)
+
+## Table of Contents
+
+  1. [Usage](#usage)
+     1. [Supported Arguments](#supported-arguments)
+     2. [Export Color As](#export-color-object-as)
+        1. [String](#string)
+        2. [Number](#number)
+     3. [Tags](#tags)
+     4. [Names](#names)
+  2. [Installation](#installation)
 ## Usage
 
 ```javascript
@@ -132,7 +143,7 @@ Lightweight javascript library for color manipulations.
 
 > **Note**: Default colors will be added in the future e.g. red:'#f00', yellow:'#ff0'...
 
-## Intallation
+## Installation
 
 ```
     $ npm install @yokgs/bluedyejs
