@@ -1,5 +1,5 @@
 /**
- * BlueDyeJS v1.3.1
+ * BlueDyeJS v2.0.0
  * by Yazid SLILA (@yokgs)
  * MIT License
  */
@@ -15,7 +15,7 @@
         correction = a => Math.max(0, Math.min(Math.round(a), 255)),
         alpha_correction = a => Math.max(0, Math.min(a, 1));
     var _dark = (a, b) => (1 - b / 100) * a,
-        _light = (a, b) => (a + (1 - b / 100) * (255 - a));
+        _light = (a, b) => (a + b / 100 * (255 - a));
 
     var bluedye = function (color) {
         return new localBlueDye.color(color);
@@ -54,9 +54,35 @@
             this.GREEN = correction(s[1]);
             this.BLUE = correction(s[2]);
             this.ALPHA = alpha_correction(typeof s[3] != 'number' ? 1 : s[3]);
+
+            /* v2.0 */
+
+            this.R = [this.RED, this.GREEN, this.BLUE, this.ALPHA];
+            this.backup = [];
+
             this.tag = null;
             return this;
         },
+
+        /* v2.0 */
+
+        save: function () {
+
+        },
+        undo: function () {
+            
+        },
+        pin: function () {
+            this.R = [this.RED, this.GREEN, this.BLUE, this.ALPHA];
+            this.backup = [];
+            return this.save();
+        },
+        reset: function () {
+            [this.RED, this.GREEN, this.BLUE, this.ALPHA] = this.R;
+            this.backup = [];
+            return this.save();
+        },
+
         red: function (red) {
             if (typeof red == 'number') this.RED = correction(red);
             return this;
@@ -128,8 +154,8 @@
             return this;
         },
         css: function () {
-            if (this.ALPHA === 1) return `rgb(${this.RED},${this.GREEN},${this.BLUE})`;
-            return `rgba(${this.RED},${this.GREEN},${this.BLUE},${this.ALPHA})`;
+            if (this.ALPHA === 1) return `rgb(${correction(this.RED)},${correction(this.GREEN)},${correction(this.BLUE)})`;
+            return `rgba(${correction(this.RED)},${correction(this.GREEN)},${correction(this.BLUE)},${alpha_correction(this.ALPHA)})`;
         },
         hex: function () {
             return `#${Hex(this.RED)}${Hex(this.GREEN)}${Hex(this.BLUE)}`;
@@ -163,7 +189,7 @@
         tags: {}
     };
     bluedye.add({
-        version: [1, 3, 1],
+        version: [2, 0, 0],
         alpha: false,
         getColor: function (tag) {
             return _private.tags[tag];

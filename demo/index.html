@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>@yokgs/BlueDyeJS Playground</title>
+        <script defer src="vue.js"></script>
+        <script defer src="index.js"></script>
+    </head>
+    <body>
+        <input v-model="rawcolor">
+        <div :style="'background-color:'+color.css()">
+            {{ color.css() }}
+        </div>
+        <div class="loadscreen"></div>
+    </body>
+</html>
