@@ -2,6 +2,9 @@
 
 Lightweight javascript library for color manipulations.
 
+![1.3.0](https://img.shields.io/github/package-json/v/yokgs/BlueDyeJS?color=%23118cff&style=for-the-badge)
+
+![MIT](https://img.shields.io/github/license/yokgs/BlueDyeJS?color=%23007bff&style=for-the-badge)
 ## Usage
 
 ```javascript
@@ -100,7 +103,35 @@ Lightweight javascript library for color manipulations.
     c.red(255);
     c.RED // 255
     b.RED // 255 too (b and c represent the same color)
+    b.setTag('color1').setTag('color2');
+    bluedye.getColor('color1') // undefined (why? each color has only one tag)
+    c.tag // color2 (tag 'my-color' is updated to 'color2')
 ```
+
+### Names
+
+```javascript
+    var a = bluedye().red(88).blue(11);
+    a.RED // 88
+    a.BLUE // 11
+    a.name('my-color');
+    a = 0; // oops our color is gone :(
+    // do not worry we can recover it
+    var b = bluedye('my-color'); // or bluedye.name('my-color')
+    b.RED // 88 
+    b.BLUE // 11
+    b.green(30);
+    b.GREEN // 30
+    var c = bluedye('my-color');
+    c.GREEN // 0 (my-color is a constant)
+    c.red(255);
+    c.RED // 255
+    b.RED // still 88 (b and c are two diffrent colors)
+    b.name('color1').name('color2');
+    bluedye.name('color1') // rgb(88,0,11) (!=undefined)
+```
+
+> **Note**: Default colors will be added in the future e.g. red:'#f00', yellow:'#ff0'...
 
 ## Intallation
 

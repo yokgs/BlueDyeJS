@@ -23,7 +23,7 @@
     let localBlueDye = bluedye.prototype = {
         color: function (color) {
             //default values
-            var s = [0, 0, 0, 1];
+            var s = [0, 0, 0];
             if (typeof color == 'undefined') s[3] = 0;
             if (typeof color == "string") {
                 if (/^#[0-1a-fA-F]+/.test(color)) {
@@ -47,15 +47,13 @@
             }
             if (typeof color == 'object' && color.length) {
                 s = color;
-                if (s.length == 3) s[3] = 1;
-                else if (s.length === 1) return bluedye.grayscale(s[0]);
-                else if (s.length < 3) s = [0, 0, 0, 0];
+                if (s.length === 1) return bluedye.grayscale(s[0]);
             }
-            if (typeof color == 'boolean' && color) s = [255, 255, 255, 1];
+            if (typeof color == 'boolean') s = color ? [255, 255, 255, 1] : [0, 0, 0, 1];
             this.RED = correction(s[0]);
             this.GREEN = correction(s[1]);
             this.BLUE = correction(s[2]);
-            this.ALPHA = alpha_correction(s[3]);
+            this.ALPHA = alpha_correction(typeof s[3] != 'number' ? 1 : 0);
             this.tag = null;
             return this;
         },
