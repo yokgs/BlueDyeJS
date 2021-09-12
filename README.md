@@ -2,8 +2,9 @@
 
 Lightweight javascript library for color manipulations.
 
-![1.3.0](https://img.shields.io/github/package-json/v/yokgs/BlueDyeJS?color=%23118cff&style=for-the-badge)
+> **Try Our [Demo](#Demo)**
 
+![1.3.0](https://img.shields.io/github/package-json/v/yokgs/BlueDyeJS?color=%23118cff&style=for-the-badge)
 ![MIT](https://img.shields.io/github/license/yokgs/BlueDyeJS?color=%23007bff&style=for-the-badge)
 
 ## Table of Contents
@@ -148,3 +149,5 @@ Lightweight javascript library for color manipulations.
 ```
     $ npm install @yokgs/bluedyejs
 ```
+## Demo
+Stay tuned!
