@@ -9,7 +9,7 @@
         rgba = (r, g, b, a) => [r, g, b, a],
         Hex = a => ((a > 15 ? '' : '0') + Math.floor(a).toString(16)),
         fromHex = a => {
-            if (a.length == 4) return parseInt(a[1] + a[1] + a[2] + a[2] + a[3] + a[3], 16) * 17;
+            if (a.length == 4) return parseInt(a[1] + a[1] + a[2] + a[2] + a[3] + a[3], 16);
             return parseInt(a.substr(1), 16);
         },
         correction = a => Math.max(0, Math.min(Math.round(a), 255)),
@@ -40,10 +40,7 @@
                 }
             }
             if (typeof color == "number") {
-                for (let i = 2; i >= 0; i--) {
-                    s[i] = Math.floor(color) % 256;
-                    color /= 256;
-                }
+                return bluedye.number(color)
             }
             if (typeof color == 'object' && color.length) {
                 s = color;
@@ -179,7 +176,7 @@
     localBlueDye.color.prototype = localBlueDye;
     bluedye.add = function (obj, overwrite) {
         for (let k in obj) {
-            var t = k in bluedye ? overwrite : !overwrite;
+            var t =((k in bluedye)&&overwrite)||!(k in bluedye);
             if (t) bluedye[k] = obj[k];
         }
         return bluedye;
@@ -200,8 +197,16 @@
         rgba: function (r, g, b, a) {
             return bluedye(`rgba(${r},${g},${b},${a})`);
         },
-        name: function (name) {
-            return _private.colors[name];
+        number: function (n) {
+            var s = [0, 0, 0];
+            for (let i = 2; i >= 0; i--) {
+                s[i] = Math.floor(n) % 256;
+                n /= 256;
+            }
+            return bluedye(s);
+        },
+        colorName: function (name) {
+            return bluedye(_private.colors[name]);
         },
         grayscale: function (a) {
             return bluedye.rgb(a, a, a);
@@ -209,6 +214,6 @@
         random: function () {
             return bluedye().random();
         },
-    })
+    },true)
     return bluedye;
 })));
