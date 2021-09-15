@@ -60,3 +60,4 @@ BDAssert(bluedye.colorName('test').css(), bluedye('test').css());
 BDAssert(bluedye('test').css(), bluedye.getColor('#test').css())
 
 console.log("Test passed!");
+return 0
