@@ -20,6 +20,8 @@ Lightweight javascript library for color manipulations.
 ## Usage
 
 ```javascript
+    const bluedye = require('@yokgs/bluedyejs');
+    
     let color = bluedye('rgb(0,0,255)'), // red
         defaultColor = bluedye(), // transparent
         black = bluedye(false),
@@ -128,7 +130,7 @@ Lightweight javascript library for color manipulations.
     a.name('my-color');
     a = 0; // oops our color is gone :(
     // do not worry we can recover it
-    var b = bluedye('my-color'); // or bluedye.name('my-color')
+    var b = bluedye('my-color'); // or bluedye.colorName('my-color')
     b.RED // 88 
     b.BLUE // 11
     b.green(30);

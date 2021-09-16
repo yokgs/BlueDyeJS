@@ -54,7 +54,7 @@
 
             /* v2.0 */
 
-            this.R = [this.RED, this.GREEN, this.BLUE, this.ALPHA];
+            this.R = this.toArray();
             this.backup = [];
 
             this.tag = null;
@@ -79,7 +79,7 @@
             return this.save();
         },
         pin: function () {
-            this.R = [this.RED, this.GREEN, this.BLUE, this.ALPHA];
+            this.R = this.toArray();
             this.backup = [];
             return this.save();
         },
@@ -106,47 +106,38 @@
             return this.save();
         },
         rgb: function (r, g, b) {
-            return this.red(r).green(g).blue(b);
+            [this.RED, this.GREEN, this.BLUE] = [r, g, b].map(correction);
+            return this.save();
         },
         rgba: function (r, g, b, a) {
-            return this.rgb(r, g, b).alpha(a);
+            [this.RED, this.GREEN, this.BLUE] = [r, g, b].map(correction);
+            this.ALPHA = alpha_correction(a);
+            return this.save();
         },
         dark: function (level = 1) {
             level = Math.min(Math.max(level, 0), 100);
-            this.RED = _dark(this.RED, level);
-            this.GREEN = _dark(this.GREEN, level);
-            this.BLUE = _dark(this.BLUE, level);
+            [this.RED, this.GREEN, this.BLUE] = this.toArray().map(x => _dark(x, level));
             return this.save();
         },
         light: function (level = 1) {
             level = Math.min(Math.max(level, 0), 100);
-            this.RED = _light(this.RED, level);
-            this.GREEN = _light(this.GREEN, level);
-            this.BLUE = _light(this.BLUE, level);
+            [this.RED, this.GREEN, this.BLUE] = this.toArray().map(x => _light(x, level));
             return this.save();
         },
         negative: function () {
-            this.RED = 255 - this.RED;
-            this.GREEN = 255 - this.GREEN;
-            this.BLUE = 255 - this.BLUE;
+            [this.RED, this.GREEN, this.BLUE] = this.toArray().map(x => (255 - x));
             return this.save();
         },
         redToBlue: function () {
-            let t = this.RED;
-            this.RED = this.GREEN;
-            this.GREEN = this.BLUE;
-            this.BLUE = t;
+            [this.BLUE, this.RED, this.GREEN] = this.toArray();
             return this.save();
         },
         blueToRed: function () {
-            let t = this.BLUE;
-            this.BLUE = this.GREEN;
-            this.GREEN = this.RED;
-            this.RED = t;
+            [this.GREEN, this.BLUE, this.RED] = this.toArray();
             return this.save();
         },
         gray: function () {
-            var y = (this.RED + this.GREEN + this.BLUE) / 3;
+            let y = (this.RED + this.GREEN + this.BLUE) / 3;
             this.RED = this.GREEN = this.BLUE = y;
             return this.save();
         },
@@ -169,6 +160,9 @@
         number: function () {
             return ((this.RED * 256) + this.GREEN) * 256 + this.BLUE;
         },
+        toArray: function () {
+            return [this.RED, this.GREEN, this.BLUE, this.ALPHA];
+        },
         setTag: function (tag) {
             if (this.tag) delete _private.tags[this.tag];
             _private.tags[tag] = this;
@@ -185,7 +179,7 @@
     localBlueDye.color.prototype = localBlueDye;
     bluedye.add = function (obj, overwrite) {
         for (let k in obj) {
-            var t =((k in bluedye)&&overwrite)||!(k in bluedye);
+            var t = ((k in bluedye) && overwrite) || !(k in bluedye);
             if (t) bluedye[k] = obj[k];
         }
         return bluedye;
@@ -223,6 +217,6 @@
         random: function () {
             return bluedye().random();
         },
-    },true)
+    }, true)
     return bluedye;
 })));
