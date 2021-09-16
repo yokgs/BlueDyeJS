@@ -58,16 +58,25 @@
             this.backup = [];
 
             this.tag = null;
-            return this;
+            return this.save();
         },
 
         /* v2.0 */
 
         save: function () {
-
+            this.backup.push({
+                r: this.RED,
+                g: this.GREEN,
+                b: this.BLUE,
+                a: this.ALPHA
+            });
+            return this;
         },
         undo: function () {
-            
+            this.backup.pop();
+            var i = this.backup.pop();
+            [this.RED, this.GREEN, this.BLUE, this.ALPHA] = [i.r, i.g, i.b, i.a];
+            return this.save();
         },
         pin: function () {
             this.R = [this.RED, this.GREEN, this.BLUE, this.ALPHA];
@@ -82,19 +91,19 @@
 
         red: function (red) {
             if (typeof red == 'number') this.RED = correction(red);
-            return this;
+            return this.save();
         },
         green: function (green) {
             if (typeof green == 'number') this.GREEN = correction(green);
-            return this;
+            return this.save();
         },
         blue: function (blue) {
             if (typeof blue == 'number') this.BLUE = correction(blue);
-            return this;
+            return this.save();
         },
         alpha: function (alpha) {
             this.ALPHA = alpha_correction(alpha);
-            return this;
+            return this.save();
         },
         rgb: function (r, g, b) {
             return this.red(r).green(g).blue(b);
@@ -107,39 +116,39 @@
             this.RED = _dark(this.RED, level);
             this.GREEN = _dark(this.GREEN, level);
             this.BLUE = _dark(this.BLUE, level);
-            return this;
+            return this.save();
         },
         light: function (level = 1) {
             level = Math.min(Math.max(level, 0), 100);
             this.RED = _light(this.RED, level);
             this.GREEN = _light(this.GREEN, level);
             this.BLUE = _light(this.BLUE, level);
-            return this;
+            return this.save();
         },
         negative: function () {
             this.RED = 255 - this.RED;
             this.GREEN = 255 - this.GREEN;
             this.BLUE = 255 - this.BLUE;
-            return this;
+            return this.save();
         },
         redToBlue: function () {
             let t = this.RED;
             this.RED = this.GREEN;
             this.GREEN = this.BLUE;
             this.BLUE = t;
-            return this;
+            return this.save();
         },
         blueToRed: function () {
             let t = this.BLUE;
             this.BLUE = this.GREEN;
             this.GREEN = this.RED;
             this.RED = t;
-            return this;
+            return this.save();
         },
         gray: function () {
             var y = (this.RED + this.GREEN + this.BLUE) / 3;
             this.RED = this.GREEN = this.BLUE = y;
-            return this;
+            return this.save();
         },
         grey: function () {
             return this.gray();
@@ -148,7 +157,7 @@
             this.RED = correction(Math.random() * 256);
             this.GREEN = correction(Math.random() * 256);
             this.BLUE = correction(Math.random() * 256);
-            return this;
+            return this.save();
         },
         css: function () {
             if (this.ALPHA === 1) return `rgb(${correction(this.RED)},${correction(this.GREEN)},${correction(this.BLUE)})`;
