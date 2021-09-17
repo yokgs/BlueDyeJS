@@ -3,9 +3,6 @@
   "version": "2.0.0",
   "description": "Lightweight javascript library for color manipulations.",
   "main": "src/bluedye.js",
-  "files": [
-    "src"
-  ],
   "scripts": {
     "test": "node test.js"
   },
@@ -23,7 +20,7 @@
     "grayscale",
     "bluedye"
   ],
-  "author": "Yazid Slila",
+  "author": "yokgs",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/yokgs/BlueDyeJS/issues"
