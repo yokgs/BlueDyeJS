@@ -14,6 +14,7 @@ Lightweight javascript library for color manipulations.
      2. [Export Color As](#export-color-object-as)
         1. [String](#string)
         2. [Number](#number)
+        3. [Array](#array)
      3. [Tags](#tags)
      4. [Names](#names)
      5. [History tracking](#history-tracking)
@@ -98,6 +99,12 @@ Lightweight javascript library for color manipulations.
 ```javascript
     color.number() // 16711680
     black.number() // 0
+```
+
+#### Array
+```javascript
+    color.toArray() // [255, 0, 0, 0.6]
+    black.toArray() // [0, 0, 0, 1]
 ```
 
 ### Tags
