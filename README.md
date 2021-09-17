@@ -16,12 +16,14 @@ Lightweight javascript library for color manipulations.
         2. [Number](#number)
      3. [Tags](#tags)
      4. [Names](#names)
+     5. [History tracking](#history-tracking)
+     6. [Reset and Pin](#reset-and-pin)
   2. [Installation](#installation)
 ## Usage
 
 ```javascript
     const bluedye = require('@yokgs/bluedyejs');
-    
+
     let color = bluedye('rgb(0,0,255)'), // red
         defaultColor = bluedye(), // transparent
         black = bluedye(false),
@@ -145,6 +147,44 @@ Lightweight javascript library for color manipulations.
 ```
 
 > **Note**: Default colors will be added in the future e.g. red:'#f00', yellow:'#ff0'...
+
+### History tracking
+
+```javascript
+    let a = bluedye();
+    a.BLUE // 0
+    a.blue(15);
+    a.BLUE // 15
+    a.undo();
+    a.BLUE // 0
+    a.red(7).green(100).blue(6);
+           a.toArray() // [7, 100, 6, 0]
+    a.undo().toArray() // [7, 100, 0, 0]
+    a.undo().toArray() // [7, 0, 0, 0]
+    a.undo().toArray() // [0, 0, 0, 0]
+    a.undo().toArray() // [0, 0, 0, 0]
+```
+
+### Reset and Pin
+
+```javascript
+    let a = bluedye();
+    a.toArray() // [0, 0, 0, 0]
+    a.red(7).green(100).blue(6);
+    a.toArray() // [7, 100, 6, 0]
+    a.pin();
+    a.undo().toArray() // [7, 100, 6, 0]
+    a.undo().toArray() // [7, 100, 6, 0] (`undo` do not work)
+    a.gray().light(50);
+    a.reset();
+    a.toArray() // [7, 100, 6, 0]
+    a.rgb(55,88,90);
+    a.reset();
+    a.toArray() // [7, 100, 6, 0]
+    a.rgb(55,88,90).pin();
+    a.reset();
+    a.toArray() // [55, 88, 90, 0]
+```
 
 ## Installation
 

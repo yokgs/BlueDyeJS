@@ -1,8 +1,9 @@
 const bluedye = require('./src/bluedye.js');
 
 var BDAssert = function (tested, expected) {
-    if (tested !== expected) {
-        throw new Error('Something is wrong!\n'+JSON.stringify(tested)+' != '+JSON.stringify(expected));
+    var s = JSON.stringify;
+    if (s(tested) !== s(expected)) {
+        throw new Error('Something is wrong!\n'+s(tested)+' != '+s(expected));
     }
 }
 var color = bluedye();
@@ -61,4 +62,5 @@ BDAssert(bluedye('test').css(), bluedye.getColor('#test').css())
 BDAssert(bluedye('#fb0').setTag('yellow').green(0).css(), 'rgb(255,0,0)');
 BDAssert(bluedye.getColor('yellow').undo().hex(), '#ffbb00');
 BDAssert(bluedye.getColor('yellow').blue(17).pin().reset().hex(), '#ffbb11');
+BDAssert(bluedye.getColor('yellow').red(0).gray().undo().toArray(),[0,0xbb,17,1])
 console.log("Test passed!");

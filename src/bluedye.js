@@ -73,6 +73,9 @@
             return this;
         },
         undo: function () {
+            if (this.backup.length === 1) {
+                return this;
+            }
             this.backup.pop();
             var i = this.backup.pop();
             [this.RED, this.GREEN, this.BLUE, this.ALPHA] = [i.r, i.g, i.b, i.a];
