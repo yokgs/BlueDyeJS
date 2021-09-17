@@ -181,8 +181,15 @@
         return bluedye;
     };
 
+    let _default = {
+        blue: 255,
+        green: 0,
+        red: 0,
+    };
+
+
     let _private = {
-        colors: {},
+        colors: Object.create(_default),
         tags: {}
     };
 
@@ -214,6 +221,15 @@
         },
         random: function () {
             return bluedye().random().pin();
+        },
+        free: function () {
+            var y = _private.tags;
+            for (let i in y) {
+                y[i].tag = undefined;
+            }
+            _private.tags = {};
+            _private.colors = Object.create(_default);
+            return bluedye;
         }
     }, true);
     return bluedye;
