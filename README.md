@@ -25,13 +25,13 @@ Lightweight javascript library for color manipulations.
 ```javascript
     const bluedye = require('@yokgs/bluedyejs');
 
-    let color = bluedye('rgb(0,0,255)'), // red
+    let color = bluedye('red'),
         defaultColor = bluedye(), // transparent
         black = bluedye(false),
         blackToo=bluedye(0),
         white=bluedye(true),
         blue=bluedye('#0000ff'),
-        randomColor = bluedye().random();
+        randomColor = bluedye.random();
 ```
 
 ### Supported arguments
