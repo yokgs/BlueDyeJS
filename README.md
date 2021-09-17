@@ -64,14 +64,17 @@ Lightweight javascript library for color manipulations.
     <tr>
         <td>rgb(0, 0, 0) ... rgb(255, 255, 255)</td>
         <td>rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1)</td>
+         <td>bluedye.rgb(0, 0, 0) ... bluedye.rgb(255, 255, 255)</td>
     </tr>
     <tr>
         <td>Number (0 ... 16777215)</td>
         <td> rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1)</td>
+        <td>bluedye.number(0) ...  bluedye.number(16777215)</td>
     </tr>
     <tr>
         <td>[n] ([0] ... [255])</td>
         <td> rgba(n, n, n, 1) (rgba(0, 0, 0, 1) ... rgba(255, 255, 255, 1))</td>
+        <td>bluedye.grayscale(0) ... bluedye.grayscale(255)</td>
     </tr>
     <tr>
         <td>[r, g, b] ([0, 0, 0] ... [255, 255, 255])</td>

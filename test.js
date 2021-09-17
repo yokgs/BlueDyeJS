@@ -62,5 +62,6 @@ BDAssert(bluedye('test').css(), bluedye.getColor('#test').css())
 BDAssert(bluedye('#fb0').setTag('yellow').green(0).css(), 'rgb(255,0,0)');
 BDAssert(bluedye.getColor('yellow').undo().hex(), '#ffbb00');
 BDAssert(bluedye.getColor('yellow').blue(17).pin().reset().hex(), '#ffbb11');
-BDAssert(bluedye.getColor('yellow').red(0).gray().undo().toArray(),[0,0xbb,17,1])
+BDAssert(bluedye.getColor('yellow').red(0).gray().undo().toArray(), [0, 0xbb, 17, 1]);
+BDAssert(bluedye.number(0xff5678).hex(), '#ff5678');
 console.log("Test passed!");

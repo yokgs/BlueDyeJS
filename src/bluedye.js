@@ -1,5 +1,5 @@
 /**
- * BlueDyeJS v2.0.0
+ * BlueDyeJS v2.0.1
  * by Yazid SLILA (@yokgs)
  * MIT License
  */
@@ -13,13 +13,14 @@
             return parseInt(a.substr(1), 16);
         },
         correction = a => Math.max(0, Math.min(Math.round(a), 255)),
-        alpha_correction = a => Math.max(0, Math.min(a, 1));
-    var _dark = (a, b) => (1 - b / 100) * a,
+        alpha_correction = a => Math.max(0, Math.min(a, 1)),
+        _dark = (a, b) => (1 - b / 100) * a,
         _light = (a, b) => (a + b / 100 * (255 - a));
 
     var bluedye = function (color) {
         return new localBlueDye.color(color);
     };
+
     let localBlueDye = bluedye.prototype = {
         color: function (color) {
             //default values
@@ -51,18 +52,11 @@
             this.GREEN = correction(s[1]);
             this.BLUE = correction(s[2]);
             this.ALPHA = alpha_correction(typeof s[3] != 'number' ? 1 : s[3]);
-
-            /* v2.0 */
-
             this.R = this.toArray();
             this.backup = [];
-
             this.tag = null;
             return this.save();
         },
-
-        /* v2.0 */
-
         save: function () {
             this.backup.push({
                 r: this.RED,
@@ -91,7 +85,6 @@
             this.backup = [];
             return this.save();
         },
-
         red: function (red) {
             if (typeof red == 'number') this.RED = correction(red);
             return this.save();
@@ -161,7 +154,7 @@
             return `#${Hex(this.RED)}${Hex(this.GREEN)}${Hex(this.BLUE)}`;
         },
         number: function () {
-            return ((this.RED * 256) + this.GREEN) * 256 + this.BLUE;
+            return ((correction(this.RED) * 256) + correction(this.GREEN)) * 256 + correction(this.BLUE);
         },
         toArray: function () {
             return [this.RED, this.GREEN, this.BLUE, this.ALPHA];
@@ -187,12 +180,14 @@
         }
         return bluedye;
     };
+
     let _private = {
         colors: {},
         tags: {}
     };
+
     bluedye.add({
-        version: [2, 0, 0],
+        version: [2, 0, 1],
         alpha: false,
         getColor: function (tag) {
             return _private.tags[tag];
@@ -218,8 +213,8 @@
             return bluedye.rgb(a, a, a);
         },
         random: function () {
-            return bluedye().random();
-        },
-    }, true)
+            return bluedye().random().pin();
+        }
+    }, true);
     return bluedye;
 })));
