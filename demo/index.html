@@ -39,7 +39,7 @@
       color.blueToRed()</div>
   </div>
   <div>
-    <div @click="color.undo()" :style="'background-color:'+bluedye(color.backup[color.backup.length-1]).css()">
+    <div @click="color.undo()" :style="'background-color:'+bluedye(color.backup[color.backup.length-2]).css()">
       color.undo()</div>
       <div @click="color.random()" :style="'background-color:'+bluedye(color.css()).random().css()">
         color.random()</div>
