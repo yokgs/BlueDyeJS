@@ -1,16 +1,91 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>@yokgs/BlueDyeJS Playground</title>
-        <script defer src="https://unpkg.com/vue@next/dist/vue.js"></script>
-        <script defer src="index.js"></script>
-        <link rel="stylesheet" type="text/css" href="style.css">
-    </head>
-    <body>
-        <input v-model="rawcolor">
-        <div :style="'background-color:'+color.css()">
-            {{ color.css() }}
-        </div>
-        <div class="loadscreen"></div>
-    </body>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <script defer src="vue.js"></script>
+  <script defer src="../src/bluedye.js"></script>
+  <script defer src="index.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body id="app">
+  <input v-model.trim="rawcolor" @keyup="updateColor">
+  <div class="output" :style="'background-color:'+color.css()">
+    color.css() = "{{ color.css() }}"
+  </div>
+  <div class="output" :style="'background-color:'+color.css()">
+    color.hex() = "{{ color.hex() }}" 
+  </div>
+  <div class="output" :style="'background-color:'+color.css()">
+    color.number() = {{ color.number() }}
+  </div>
+  <div class="output" :style="'background-color:'+color.css()">
+    color.toArray() = {{ color.toArray() }}
+  </div>
+  <div>
+    <div @click="color.negative()" :style="'background-color:'+bluedye(color.css()).negative().css()">
+      color.negative()</div>
+      <div @click="color.gray()" :style="'background-color:'+bluedye(color.css()).gray().css()">
+        color.grey()</div>
+    </div>
+  </div>
+  <div>
+    <div @click="color.redToBlue()" :style="'background-color:'+bluedye(color.css()).redToBlue().css()">
+      color.redToBlue()</div>
+    <div @click="color.blueToRed()" :style="'background-color:'+bluedye(color.css()).blueToRed().css()">
+      color.blueToRed()</div>
+  </div>
+  <div>
+    <div @click="color.undo()" :style="'background-color:'+bluedye(color.backup[color.backup.length-1]).css()">
+      color.undo()</div>
+      <div @click="color.random()" :style="'background-color:'+bluedye(color.css()).random().css()">
+        color.random()</div>
+  </div>
+  <div>
+    <div @click="color.reset()" :style="'background-color:'+bluedye(color.R).css()">
+      color.reset()</div>
+    <div @click="color.pin()" :style="'background-color:'+color.css()">
+      color.pin()</div>
+  </div>
+  <div>
+    <div @click="color.light(light)" :style="'background-color:'+bluedye(color.css()).light(light).css()">
+      color.light({{ light }})</div>
+    <input v-model="light" max="100" min="0" type="number">
+  </div>
+  <div>
+    <div @click="color.dark(dark)" :style="'background-color:'+bluedye(color.css()).dark(dark).css()">
+      color.dark({{ dark }})</div>
+    <input v-model="dark" max="100" min="0" type="number">
+  </div>
+  <div>
+    <div @click="color.red(red)" :style="'background-color:'+bluedye(color.css()).red(red).css()">
+      color.red({{ red }})</div>
+    <input v-model="red" max="255" min="0" type="number">
+  </div>
+  <div>
+    <div @click="color.green(green)" :style="'background-color:'+bluedye(color.css()).green(green).css()">
+      color.green({{ green }})</div>
+    <input v-model="green" max="255" min="0" type="number">
+  </div>
+  <div>
+    <div @click="color.blue(blue)" :style="'background-color:'+bluedye(color.css()).blue(blue).css()">
+      color.blue({{ blue }})</div>
+    <input v-model="blue" max="255" min="0" type="number">
+  </div>
+    <div>
+    <div @click="color.alpha(alpha)" :style="'background-color:'+bluedye(color.css()).alpha(alpha).css()">
+      color.alpha({{ alpha }})</div>
+    <input v-model="alpha" type="number">
+  </div>
+  <div>
+    <div @click="color.name(name)" :style="'background-color:'+color.css()">
+      color.name({{ name }})</div>
+    <input v-model="name">
+  </div>
+  
+</body>
+
 </html>

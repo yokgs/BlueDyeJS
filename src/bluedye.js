@@ -1,5 +1,5 @@
 /**
- * BlueDyeJS v2.1.0
+ * BlueDyeJS v2.1.1
  * by Yazid SLILA (@yokgs)
  * MIT License
  */
@@ -58,12 +58,7 @@
             return this.save();
         },
         save: function () {
-            this.backup.push({
-                r: this.RED,
-                g: this.GREEN,
-                b: this.BLUE,
-                a: this.ALPHA
-            });
+            this.backup.push(this.toArray());
             return this;
         },
         undo: function () {
@@ -71,8 +66,7 @@
                 return this;
             }
             this.backup.pop();
-            var i = this.backup.pop();
-            [this.RED, this.GREEN, this.BLUE, this.ALPHA] = [i.r, i.g, i.b, i.a];
+            [this.RED, this.GREEN, this.BLUE, this.ALPHA] = this.backup.pop();
             return this.save();
         },
         pin: function () {
@@ -338,7 +332,7 @@
     };
 
     bluedye.add({
-        version: [2, 1, 0],
+        version: [2, 1, 1],
         alpha: false,
         getColor: function (tag) {
             return _private.tags[tag];
