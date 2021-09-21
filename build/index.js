@@ -24,6 +24,11 @@ let app = Vue.createApp({
     switchOn() {
       this.on = !this.on;
     }
+  },
+  computed: {
+    oldcolor() {
+      return this.color.backup.length==1?this.color.css():bluedye(this.color.backup[this.color.backup.length-2]).css()
+    }
   }
 });
 let colorFormatter = function(s) {

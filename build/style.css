@@ -1,6 +1,7 @@
 *{
   margin:0;
   padding:0;
+  outline: 0;
 }
 div,input{
   display:flex;
@@ -9,7 +10,37 @@ div,input{
   height:65px;
   width: 100%;
   text-align: center;
+  border-radius: 10px;
+  margin: 5px;
+  border: 0;
 }
 div>input{
-  width:25%;
+  width:30%;
+}
+input{
+  background-color: rgba(0,123,255,.3);
+  border: 2px solid rgba(0,123,255,.2);
+  box-sizing: border-box;
+}
+.groups{
+  height: auto;
+  width: 100%;
+  margin: 0;
+  flex-direction: column;
+}
+.group{
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+@media screen and (min-width:768px){
+  body{
+    width: 768px;
+    margin: 0 calc(50% - 384px);
+  }
+  .groups{
+    flex-direction: row;
+  }
 }
