@@ -4,7 +4,7 @@ Lightweight javascript library for color manipulations.
 
 > **Try Our [Demo](https://bluedyejs.onrender.com/)**
 
-![2.1.1](https://img.shields.io/github/package-json/v/yokgs/BlueDyeJS?color=%23118cff&style=for-the-badge)
+![2.1.2](https://img.shields.io/github/package-json/v/yokgs/BlueDyeJS?color=%23118cff&style=for-the-badge)
 ![MIT](https://img.shields.io/github/license/yokgs/BlueDyeJS?color=%23007bff&style=for-the-badge)
 
 ## Table of Contents

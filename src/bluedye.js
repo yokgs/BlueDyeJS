@@ -1,13 +1,11 @@
 /**
- * BlueDyeJS v2.1.1
+ * BlueDyeJS v2.1.2
  * by Yazid SLILA (@yokgs)
  * MIT License
  */
 (function (r, e) { typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = e() : typeof define === 'function' && define.amd ? define(e) : (r.bluedye = e()); }(this, (function () {
     'use strict';
-    var rgb = (r, g, b) => [r, g, b, 1],
-        rgba = (r, g, b, a) => [r, g, b, a],
-        Hex = a => ((a > 15 ? '' : '0') + Math.floor(a).toString(16)),
+    let Hex = a => ((a > 15 ? '' : '0') + Math.floor(a).toString(16)),
         fromHex = a => {
             if (a.length == 4) return parseInt(a[1] + a[1] + a[2] + a[2] + a[3] + a[3], 16);
             return parseInt(a.substr(1), 16);
@@ -27,13 +25,13 @@
             var s = [0, 0, 0];
             if (typeof color == 'undefined') s[3] = 0;
             if (typeof color == "string") {
-                if (/^#[0-1a-fA-F]+/.test(color)) {
+                if (/^#[0-9a-fA-F]{3,6}$/.test(color)) {
                     color = fromHex(color);
                 } else {
                     if (color in _private.colors) {
                         return bluedye(_private.colors[color]);
                     }
-                    if (/^rgba*\([\d,\.\s]+\)/.test(color)) {
+                    if (/^rgba*\([\d,\.\s]+\)$/.test(color)) {
                         let rgb = (r, g, b) => [r, g, b, 1],
                             rgba = (r, g, b, a) => [r, g, b, a];
                         try { s = eval(color) } catch (_) { };
@@ -43,7 +41,7 @@
             if (typeof color == "number") {
                 return bluedye.number(color)
             }
-            if (typeof color == 'object' && color.length) {
+            if (color instanceof Array) {
                 s = color;
                 if (s.length === 1) return bluedye.grayscale(s[0]);
             }
@@ -175,7 +173,7 @@
         return bluedye;
     };
     /* default colors are picked from https://www.w3schools.com/colors/colors_names.asp */
-    let _default = {
+    const _default = {
         aliceblue: 15792383,
         antiquewhite: 16444375,
         aqua: 65535,
@@ -332,7 +330,7 @@
     };
 
     bluedye.add({
-        version: [2, 1, 1],
+        version: [2, 1, 2],
         alpha: false,
         getColor: function (tag) {
             return _private.tags[tag];
@@ -358,7 +356,7 @@
             return bluedye.rgb(a, a, a);
         },
         random: function () {
-            return bluedye().random().pin();
+            return bluedye().random().alpha(1).pin();
         },
         free: function () {
             var y = _private.tags;
