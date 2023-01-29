@@ -22,6 +22,7 @@ Lightweight javascript library for color manipulations.
     - [History tracking](#history-tracking)
     - [Reset and Pin](#reset-and-pin)
   - [Installation](#installation)
+  - [License](#license)
 
 ## Usage
 
@@ -223,3 +224,9 @@ Lightweight javascript library for color manipulations.
 ```sh
 npm install @yokgs/bluedyejs
 ```
+
+## License
+
+[MIT](https://opensource.org/licenses/MIT)
+
+Copyright (c) 2021-present, Yazid Slila (yokgs)
