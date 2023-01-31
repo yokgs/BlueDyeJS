@@ -6,6 +6,7 @@ Lightweight javascript library for color manipulations.
 
 ![2.1.2](https://img.shields.io/github/package-json/v/yokgs/BlueDyeJS?color=%23118cff&style=for-the-badge)
 ![MIT](https://img.shields.io/github/license/yokgs/BlueDyeJS?color=%23007bff&style=for-the-badge)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyokgs%2FBlueDyeJS.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyokgs%2FBlueDyeJS?ref=badge_shield)
 
 ## Table of Contents
 
@@ -23,6 +24,9 @@ Lightweight javascript library for color manipulations.
     - [Reset and Pin](#reset-and-pin)
   - [Installation](#installation)
   - [License](#license)
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyokgs%2FBlueDyeJS.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyokgs%2FBlueDyeJS?ref=badge_large)
 
 ## Usage
 
