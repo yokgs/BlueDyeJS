@@ -1,4 +1,4 @@
-const {check, suite} = require('./assert.js');
+const { check, suite } = require('./assert.js');
 const bluedye = require('../src/bluedye.js');
 
 suite.start("core functionality");
@@ -24,8 +24,8 @@ check(color.GREEN, r);
 color.blue(r)
 check(color.BLUE, r);
 
-color.alpha(r/255);
-check(color.ALPHA, r/255);
+color.alpha(r / 255);
+check(color.ALPHA, r / 255);
 
 
 

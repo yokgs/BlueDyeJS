@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "declaration": true,
+    "declarationDir": "./dist/dts",
+    "emitDeclarationOnly": true,
+    "outDir": "./dist",
+    "forceConsistentCasingInFileNames": true,
+    //"strict": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}
