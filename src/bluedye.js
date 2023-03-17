@@ -1,11 +1,11 @@
 /**
- * BlueDyeJS v2.1.2
+ * BlueDyeJS v2.2.0
  * by Yazid SLILA (@yokgs)
  * MIT License
  */
 (function (r, e) { typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = e() : typeof define === 'function' && define.amd ? define(e) : (r.bluedye = e()); }(this, (function () {
     'use strict';
-    let Hex = a => ((a > 15 ? '' : '0') + Math.floor(a).toString(16)),
+    const Hex = a => ((a > 15 ? '' : '0') + Math.floor(a).toString(16)),
         fromHex = a => {
             if (a.length == 4) return parseInt(a[1] + a[1] + a[2] + a[2] + a[3] + a[3], 16);
             return parseInt(a.substr(1), 16);
@@ -14,6 +14,25 @@
         alpha_correction = a => Math.max(0, Math.min(a, 1)),
         _dark = (a, b) => (1 - b / 100) * a,
         _light = (a, b) => (a + b / 100 * (255 - a));
+
+    const cmyk2rgb = (cmyk) => {
+        const [c, m, y, k] = cmyk;
+        if (k === 100) return [0, 0, 0];
+        const i = 2.55 * (100 - k);
+        return [
+            c < 100 ? 100 - c : 0,
+            m < 100 ? 100 - m : 0,
+            y < 100 ? 100 - y : 0
+        ].map(x => x * i);
+    }, rgb2cmyk = (rgb) => {
+        let [r, g, b] = rgb.map(x => x / 2.55);
+        const k = 100 - Math.max(r, g, b);
+        const f = k < 100 ? 100 / (100 - k) : 0;
+        const c = (100 - r - k) * f;
+        const m = (100 - g - k) * f;
+        const y = (100 - b - k) * f;
+        return [c, m, y, k];
+    };
 
     var bluedye = function (color) {
         return new localBlueDye.color(color);
@@ -93,6 +112,18 @@
             this.ALPHA = alpha_correction(alpha);
             return this.save();
         },
+        cyan: function (cyan){
+
+        },
+        yellow: function (yellow){
+
+        },
+        magenta: function (magenta){
+
+        },
+        black: function (black){
+            
+        },
         rgb: function (r, g, b) {
             [this.RED, this.GREEN, this.BLUE] = [r, g, b].map(correction);
             return this.save();
@@ -150,6 +181,9 @@
         },
         toArray: function () {
             return [this.RED, this.GREEN, this.BLUE, this.ALPHA];
+        },
+        cmyk: function (){
+
         },
         setTag: function (tag) {
             if (this.tag) delete _private.tags[this.tag];
@@ -248,7 +282,8 @@
         lightgray: 13882323,
         lightgrey: 13882323,
         lightgreen: 9498256,
-        lightpink: 16758465,
+        lightpink: 16758465, 
+        hind: 16758465, 
         lightsalmon: 16752762,
         lightseagreen: 2142890,
         lightskyblue: 8900346,
@@ -330,7 +365,7 @@
     };
 
     bluedye.add({
-        version: [2, 1, 2],
+        version: [2, 2, 0],
         alpha: false,
         getColor: function (tag) {
             return _private.tags[tag];
@@ -366,6 +401,9 @@
             _private.tags = {};
             _private.colors = Object.create(_default);
             return bluedye;
+        },
+        cmyk: function(){
+
         }
     }, true);
     return bluedye;
