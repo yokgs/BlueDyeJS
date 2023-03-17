@@ -23,7 +23,7 @@
             c < 100 ? 100 - c : 0,
             m < 100 ? 100 - m : 0,
             y < 100 ? 100 - y : 0
-        ].map(x => x * i);
+        ].map(x => correction(x * i));
     }, rgb2cmyk = (rgb) => {
         let [r, g, b] = rgb.map(x => x / 2.55);
         const k = 100 - Math.max(r, g, b);
@@ -113,16 +113,24 @@
             return this.save();
         },
         cyan: function (cyan){
-
+            let [c, m, y, k] = this.cmyk();
+            [this.RED, this.GREEN, this.BLUE, this.ALPHA] = cmyk2rgb([cyan, m, y, k]);
+            return this.save();
         },
         yellow: function (yellow){
-
+            let [c, m, y, k] = this.cmyk();
+            [this.RED, this.GREEN, this.BLUE, this.ALPHA] = cmyk2rgb([c, m, yellow, k]);
+            return this.save();
         },
         magenta: function (magenta){
-
+            let [c, m, y, k] = this.cmyk();
+            [this.RED, this.GREEN, this.BLUE, this.ALPHA] = cmyk2rgb([c, magenta, y, k]);
+            return this.save();
         },
         black: function (black){
-            
+            let [c, m, y, k] = this.cmyk();
+            [this.RED, this.GREEN, this.BLUE, this.ALPHA] = cmyk2rgb([c, m, y, black]);
+            return this.save();
         },
         rgb: function (r, g, b) {
             [this.RED, this.GREEN, this.BLUE] = [r, g, b].map(correction);
@@ -183,7 +191,7 @@
             return [this.RED, this.GREEN, this.BLUE, this.ALPHA];
         },
         cmyk: function (){
-
+            return rgb2cmyk(this.toArray());
         },
         setTag: function (tag) {
             if (this.tag) delete _private.tags[this.tag];
@@ -199,6 +207,7 @@
         }
     }
     localBlueDye.color.prototype = localBlueDye;
+
     bluedye.add = function (obj, overwrite) {
         for (let k in obj) {
             var t = ((k in bluedye) && overwrite) || !(k in bluedye);
@@ -206,7 +215,7 @@
         }
         return bluedye;
     };
-    /* default colors are picked from https://www.w3schools.com/colors/colors_names.asp */
+
     const _default = {
         aliceblue: 15792383,
         antiquewhite: 16444375,
@@ -267,6 +276,7 @@
         greenyellow: 11403055,
         honeydew: 15794160,
         hotpink: 16738740,
+        hind: 16762061, 
         indianred: 13458524,
         indigo: 4915330,
         ivory: 16777200,
@@ -283,7 +293,6 @@
         lightgrey: 13882323,
         lightgreen: 9498256,
         lightpink: 16758465, 
-        hind: 16758465, 
         lightsalmon: 16752762,
         lightseagreen: 2142890,
         lightskyblue: 8900346,
@@ -402,8 +411,11 @@
             _private.colors = Object.create(_default);
             return bluedye;
         },
-        cmyk: function(){
-
+        cmyk: function(c, m, y, k){
+            return bluedye.rgb(...cmyk2rgb([c,m,y,k]));
+        },
+        cmyka: function(c, m, y, k, a){
+            return bluedye.cmyk(c, m, y, k).alpha(a).pin();
         }
     }, true);
     return bluedye;

@@ -1,5 +1,5 @@
-./demo
-./web
+demo
+web
 .vscode
 test.legacy.js
-./test
+test
