@@ -26,6 +26,9 @@ Lightweight javascript library for color manipulations.
   - [Installation](#installation)
   - [License](#license)
 
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyokgs%2FBlueDyeJS.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyokgs%2FBlueDyeJS?ref=badge_large)
+
 ## Usage
 
 ```javascript
