@@ -32,7 +32,106 @@
         const m = (100 - g - k) * f;
         const y = (100 - b - k) * f;
         return [c, m, y, k];
-    };
+    },
+        hsl2rgb = (hsl) => {
+            let [h, s, l] = hsl;
+            if (s === 0)
+                return [l, l, l].map(x => x * 2.55);
+
+            const p = [h + 120, h, h - 120].map(hue_correction);
+
+            s /= 100;
+            l /= 100;
+            const m = l * s;
+            const q = l < 0.5 ? m : s - m;
+            const t = l - q;
+            const h_ = h / 360;
+
+            return p.map(n => {
+                if (n < 60)
+                    return t + q * n / 30;
+                if (n < 180)
+                    return l + q;
+                if (n < 240)
+                    return t + q * (8 - n / 30);
+                return t;
+            }).map(x => x * 255);
+
+        },
+        rgb2hsl = (rgb) => {
+
+            let [r, g, b] = rgb;
+
+            const min = Math.min(r, g, b);
+            const max = Math.max(r, g, b);
+
+            let d = max - min,
+                t = max + min;
+
+            const l = t / 5.1;
+            let h = 60;
+
+            t /= 255;
+            if (d === 0)
+                return [0, 0, l];
+
+            let s = d / (l < 50 ? t : 2 - t) / 2.55;
+
+            if (r == max) h *= (g - b) / d;
+            else if (g == max) h *= 2 + (b - r) / d;
+            else if (b == max) h *= 4 + (r - g) / d;
+
+            return [hue_correction(h), s, l];
+        },
+        hsv2rgb = (hsv) => {
+            let [h, s, v] = hsv;
+            v *= 2.55;
+
+            if (s === 0) return [v, v, v];
+
+            let n = hue_correction(h) / 60;
+            const d = Math.floor(n);
+            const f0 = n - d;
+            const f1 = v * s / 100;
+            const f2 = f1 * f0;
+            const f3 = f1 - f2;
+
+            let rgb = [0, 0, 0];
+
+            switch (d) {
+                case 0: rgb = [1, f3, f1]; break
+                case 1: rgb = [f2, 1, f1]; break
+                case 2: rgb = [f1, 1, f3]; break
+                case 3: rgb = [f1, f2, 1]; break
+                case 4: rgb = [f3, f1, 1]; break
+                case 5: rgb = [1, f1, f2]; break
+            }
+            return rgb.map(x => x + v);
+        },
+        rgb2hsv = (rgb) => {
+            let [r, g, b] = rgb;
+            const min = Math.min(r, g, b),
+                max = Math.max(r, g, b);
+
+            if (max === 0)
+                return [0, 0, 0];
+
+            let v = max / 2.55;
+
+            if (max === min)
+                return [0, 0, v];
+
+            let h = 60;
+
+            const d = max - min;
+            let s = d / max * 100;
+
+            if (r === max) h *= (g - b) / d;
+            if (g === max) h *= 2 + (b - r) / d;
+            if (b === max) h *= 4 + (r - g) / d;
+
+            return [hue_correction(h), s, v];
+        }
 
     var bluedye = function (color) {
         return new localBlueDye.color(color);
@@ -114,22 +213,42 @@
         },
         cyan: function (cyan) {
             let [c, m, y, k] = this.cmyk();
-            [this.RED, this.GREEN, this.BLUE, this.ALPHA] = cmyk2rgb([cyan, m, y, k]);
+            [this.RED, this.GREEN, this.BLUE] = cmyk2rgb([cyan, m, y, k]);
             return this.save();
         },
         yellow: function (yellow) {
             let [c, m, y, k] = this.cmyk();
-            [this.RED, this.GREEN, this.BLUE, this.ALPHA] = cmyk2rgb([c, m, yellow, k]);
+            [this.RED, this.GREEN, this.BLUE] = cmyk2rgb([c, m, yellow, k]);
             return this.save();
         },
         magenta: function (magenta) {
             let [c, m, y, k] = this.cmyk();
-            [this.RED, this.GREEN, this.BLUE, this.ALPHA] = cmyk2rgb([c, magenta, y, k]);
+            [this.RED, this.GREEN, this.BLUE] = cmyk2rgb([c, magenta, y, k]);
             return this.save();
         },
         black: function (black) {
             let [c, m, y, k] = this.cmyk();
-            [this.RED, this.GREEN, this.BLUE, this.ALPHA] = cmyk2rgb([c, m, y, black]);
+            [this.RED, this.GREEN, this.BLUE] = cmyk2rgb([c, m, y, black]);
+            return this.save();
+        },
+        hue: function (hue) {
+            let [h, s, l] = this.hsl();
+            [this.RED, this.GREEN, this.BLUE] = hsl2rgb([hue, s, l]);
+            return this.save();
+        },
+        saturation: function (saturation) {
+            let [h, s, l] = this.hsl();
+            [this.RED, this.GREEN, this.BLUE] = hsl2rgb([h, saturation, l]);
+            return this.save();
+        },
+        lightness: function (lightness) {
+            let [h, s, l] = this.hsl();
+            [this.RED, this.GREEN, this.BLUE] = hsl2rgb([h, s, lightness]);
+            return this.save();
+        },
+        value: function (value) {
+            let [h, s, v] = this.hsv();
+            [this.RED, this.GREEN, this.BLUE] = hsv2rgb([h, s, value]);
             return this.save();
         },
         rgb: function (r, g, b) {
@@ -192,6 +311,12 @@
         },
         cmyk: function () {
             return rgb2cmyk(this.toArray());
+        },
+        hsv: function () {
+            return rgb2hsv(this.toArray());
+        },
+        hsl: function () {
+            return rgb2hsl(this.toArray());
         },
         setTag: function (tag) {
             if (this.tag) delete _private.tags[this.tag];
@@ -416,7 +541,20 @@
         },
         cmyka: function (c, m, y, k, a) {
             return bluedye.cmyk(c, m, y, k).alpha(a).pin();
+        },
+        hsv: function (h, s, v) {
+            return bluedye.rgb(...hsv2rgb([h, s, v]));
+        },
+        hsva: function (h, s, v, a) {
+            return bluedye.hsv(h, s, v).alpha(a).pin();
+        },
+        hsl: function (h, s, l) {
+            return bluedye.rgb(...hsl2rgb([h, s, l]));
+        },
+        hsla: function (h, s, l, a) {
+            return bluedye.hsl(h, s, l).alpha(a).pin();
         }
+
     }, true);
     return bluedye;
 })));
