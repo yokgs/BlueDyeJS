@@ -24,8 +24,35 @@ Lightweight javascript library for color manipulations.
     - [History tracking](#history-tracking)
     - [Reset and Pin](#reset-and-pin)
   - [Installation](#installation)
+  - [API](#api)
+    - [`undo()`](#undo)
+    - [`pin()`](#pin)
+    - [`reset()`](#reset)
+    - [`red(red: number)`](#redred-number)
+    - [`green(green: number)`](#greengreen-number)
+    - [`blue(blue: number)`](#blueblue-number)
+    - [`alpha(alpha: number)`](#alphaalpha-number)
+    - [`cyan(cyan: number)`](#cyancyan-number)
+    - [`yellow(yellow: number)`](#yellowyellow-number)
+    - [`magenta(magenta: number)`](#magentamagenta-number)
+    - [`black(black: number)`](#blackblack-number)
+    - [`cmyk()`](#cmyk)
+    - [`rgb(red: number, green: number, blue: number)`](#rgbred-number-green-number-blue-number)
+    - [`rgba(red: number, green: number, blue: number, alpha: number)`](#rgbared-number-green-number-blue-number-alpha-number)
+    - [`dark(level: number)`](#darklevel-number)
+    - [`light(level: number)`](#lightlevel-number)
+    - [`negative()`](#negative)
+    - [`redToBlue()`](#redtoblue)
+    - [`blueToRed()`](#bluetored)
+    - [`gray()`](#gray)
+    - [`grey()`](#grey)
+    - [`random()`](#random)
+    - [`css()`](#css)
+    - [`hex()`](#hex)
+    - [`number()`](#number-1)
+    - [`setTag(tag: string)`](#settagtag-string)
+    - [`name(name: string)`](#namename-string)
   - [License](#license)
-
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyokgs%2FBlueDyeJS.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyokgs%2FBlueDyeJS?ref=badge_large)
 
@@ -226,9 +253,127 @@ Lightweight javascript library for color manipulations.
 
 ## Installation
 
+Using NPM :
+
 ```sh
 npm install @yokgs/bluedyejs
 ```
+
+Using Yarn :
+
+```sh
+yarn add @yokgs/bluedyejs
+```
+
+## API
+
+### `undo()`
+
+ Undoes the last color change by restoring the previous state from the backup stack.
+
+### `pin()`
+
+ Saves the current color state as a reference point for future resets.
+
+### `reset()`
+
+ Restores the color to its state at the last pinned reference point.
+
+### `red(red: number)`
+
+ Sets or gets the red component of the color. (0 - 255)
+
+### `green(green: number)`
+
+ Sets or gets the green component of the color. (0 - 255)
+
+### `blue(blue: number)`
+
+ Sets or gets the blue component of the color. (0 - 255)
+
+### `alpha(alpha: number)`
+
+ Sets or gets the alpha (transparency) value of the color. (0 - 1)
+
+### `cyan(cyan: number)`
+
+Sets the Cyan value of the color to the given value. (0 - 255)
+
+### `yellow(yellow: number)`
+
+Sets the Yellow value of the color to the given value. (0 - 255)
+
+### `magenta(magenta: number)`
+
+Sets the Magenta value of the color to the given value. (0 - 255)
+
+### `black(black: number)`
+
+Sets the Key (Black) value of the color to the given value. (0 - 255)
+
+### `cmyk()`
+
+Returns an array of the current CMYK values of the color.
+
+### `rgb(red: number, green: number, blue: number)`
+
+Sets or gets the color as an RGB array.
+
+### `rgba(red: number, green: number, blue: number, alpha: number)`
+
+Sets or gets the color as an RGBA array.
+
+### `dark(level: number)`
+
+Darkens the color by a given percentage. (0 - 100)
+
+### `light(level: number)`
+
+Lightens the color by a given percentage. (0 - 100)
+
+### `negative()`
+
+Inverts the color.
+
+### `redToBlue()`
+
+Swaps the red and blue components of the color with hue of 240deg.
+
+### `blueToRed()`
+
+Swaps the blue and red components of the color with hue of 120deg.
+
+### `gray()`
+
+Converts the color to grayscale.
+
+### `grey()`
+
+An alias for `gray()`.
+
+### `random()`
+
+Sets the color to a random value.
+
+### `css()`
+
+Returns the color as a CSS-compatible string.
+
+### `hex()`
+
+Returns the color as a hex string.
+
+### `number()`
+
+Returns the color as a number.
+
+### `setTag(tag: string)`
+
+ Sets a tag on the color object for easy retrieval.
+
+### `name(name: string)`
+
+ Adds the color to the library of named colors.
 
 ## License
 

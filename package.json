@@ -3,6 +3,8 @@
   "version": "2.1.2",
   "description": "Lightweight javascript library for color manipulations.",
   "main": "src/bluedye.js",
+  "unpkg": "dist/bluedye.min.js",
+  "jsdelivr": "dist/bluedye.min.js",
   "scripts": {
     "test": "node ./test/"
   },
