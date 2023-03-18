@@ -112,22 +112,22 @@
             this.ALPHA = alpha_correction(alpha);
             return this.save();
         },
-        cyan: function (cyan){
+        cyan: function (cyan) {
             let [c, m, y, k] = this.cmyk();
             [this.RED, this.GREEN, this.BLUE, this.ALPHA] = cmyk2rgb([cyan, m, y, k]);
             return this.save();
         },
-        yellow: function (yellow){
+        yellow: function (yellow) {
             let [c, m, y, k] = this.cmyk();
             [this.RED, this.GREEN, this.BLUE, this.ALPHA] = cmyk2rgb([c, m, yellow, k]);
             return this.save();
         },
-        magenta: function (magenta){
+        magenta: function (magenta) {
             let [c, m, y, k] = this.cmyk();
             [this.RED, this.GREEN, this.BLUE, this.ALPHA] = cmyk2rgb([c, magenta, y, k]);
             return this.save();
         },
-        black: function (black){
+        black: function (black) {
             let [c, m, y, k] = this.cmyk();
             [this.RED, this.GREEN, this.BLUE, this.ALPHA] = cmyk2rgb([c, m, y, black]);
             return this.save();
@@ -190,7 +190,7 @@
         toArray: function () {
             return [this.RED, this.GREEN, this.BLUE, this.ALPHA];
         },
-        cmyk: function (){
+        cmyk: function () {
             return rgb2cmyk(this.toArray());
         },
         setTag: function (tag) {
@@ -275,8 +275,8 @@
         green: 32768,
         greenyellow: 11403055,
         honeydew: 15794160,
+        hind: 16762061,
         hotpink: 16738740,
-        hind: 16762061, 
         indianred: 13458524,
         indigo: 4915330,
         ivory: 16777200,
@@ -292,7 +292,7 @@
         lightgray: 13882323,
         lightgrey: 13882323,
         lightgreen: 9498256,
-        lightpink: 16758465, 
+        lightpink: 16758465,
         lightsalmon: 16752762,
         lightseagreen: 2142890,
         lightskyblue: 8900346,
@@ -380,10 +380,10 @@
             return _private.tags[tag];
         },
         rgb: function (r, g, b) {
-            return bluedye(`rgb(${r},${g},${b})`);
+            return bluedye([r, g, b]);
         },
         rgba: function (r, g, b, a) {
-            return bluedye(`rgba(${r},${g},${b},${a})`);
+            return bluedye([r, g, b, a]);
         },
         number: function (n) {
             var s = [0, 0, 0];
@@ -411,10 +411,10 @@
             _private.colors = Object.create(_default);
             return bluedye;
         },
-        cmyk: function(c, m, y, k){
-            return bluedye.rgb(...cmyk2rgb([c,m,y,k]));
+        cmyk: function (c, m, y, k) {
+            return bluedye.rgb(...cmyk2rgb([c, m, y, k]));
         },
-        cmyka: function(c, m, y, k, a){
+        cmyka: function (c, m, y, k, a) {
             return bluedye.cmyk(c, m, y, k).alpha(a).pin();
         }
     }, true);
