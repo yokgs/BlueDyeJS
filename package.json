@@ -1,6 +1,6 @@
 {
   "name": "@yokgs/bluedyejs",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "Lightweight javascript library for color manipulations.",
   "main": "src/bluedye.js",
   "unpkg": "dist/bluedye.min.js",
