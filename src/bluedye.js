@@ -12,8 +12,18 @@
         },
         correction = a => Math.max(0, Math.min(Math.round(a), 255)),
         alpha_correction = a => Math.max(0, Math.min(a, 1)),
+        hue_correction = a => ((a < 0) ? hue_correction(a + 360) : a % 360),
         _dark = (a, b) => (1 - b / 100) * a,
-        _light = (a, b) => (a + b / 100 * (255 - a));
+        _light = (a, b) => (a + b / 100 * (255 - a)),
+        _optimum = (a, b, c, d, e) => {
+            let l = Math.log10(101);
+            let la = Math.log10(a + 1) / l;
+            let lb = Math.log10(b + 1) / l;
+            let C = a * la * c;
+            let D = a * lb * d;
+            let E = b * la * e;
+            return (C + D + E) / (c + d + e);
+        };
 
     const cmyk2rgb = (cmyk) => {
         const [c, m, y, k] = cmyk;
@@ -32,106 +42,79 @@
         const m = (100 - g - k) * f;
         const y = (100 - b - k) * f;
         return [c, m, y, k];
-    },
-        hsl2rgb = (hsl) => {
-            let [h, s, l] = hsl;
-            if (s === 0)
-                return [l, l, l].map(x => x * 2.55);
+    }, hsl2rgb = (hsl) => {
+        let [h, s, l] = hsl;
+        if (s === 0)
+            return [l, l, l].map(x => x * 2.55);
+        const p = [h + 120, h, h - 120].map(hue_correction);
+        s /= 100;
+        l /= 100;
+        const m = l * s;
+        const q = l < 0.5 ? m : s - m;
+        const t = l - q;
+        return p.map(n => {
+            if (n < 60)
+                return t + q * n / 30;
+            if (n < 180)
+                return l + q;
+            if (n < 240)
+                return t + q * (8 - n / 30);
+            return t;
+        }).map(x => x * 255);
 
-            const p = [h + 120, h, h - 120].map(hue_correction);
-
-            s /= 100;
-            l /= 100;
-            const m = l * s;
-            const q = l < 0.5 ? m : s - m;
-            const t = l - q;
-            const h_ = h / 360;
-
-            return p.map(n => {
-                if (n < 60)
-                    return t + q * n / 30;
-                if (n < 180)
-                    return l + q;
-                if (n < 240)
-                    return t + q * (8 - n / 30);
-                return t;
-            }).map(x => x * 255);
-
-        },
-        rgb2hsl = (rgb) => {
-
-            let [r, g, b] = rgb;
-
-            const min = Math.min(r, g, b);
-            const max = Math.max(r, g, b);
-
-            let d = max - min,
-                t = max + min;
-
-            const l = t / 5.1;
-            let h = 60;
-
-            t /= 255;
-            if (d === 0)
-                return [0, 0, l];
-
-            let s = d / (l < 50 ? t : 2 - t) / 2.55;
-
-            if (r == max) h *= (g - b) / d;
-            else if (g == max) h *= 2 + (b - r) / d;
-            else if (b == max) h *= 4 + (r - g) / d;
-
-            return [hue_correction(h), s, l];
-        },
-        hsv2rgb = (hsv) => {
-            let [h, s, v] = hsv;
-            v *= 2.55;
-
-            if (s === 0) return [v, v, v];
-
-            let n = hue_correction(h) / 60;
-            const d = Math.floor(n);
-            const f0 = n - d;
-            const f1 = v * s / 100;
-            const f2 = f1 * f0;
-            const f3 = f1 - f2;
-
-            let rgb = [0, 0, 0];
-
-            switch (d) {
-                case 0: rgb = [1, f3, f1]; break
-                case 1: rgb = [f2, 1, f1]; break
-                case 2: rgb = [f1, 1, f3]; break
-                case 3: rgb = [f1, f2, 1]; break
-                case 4: rgb = [f3, f1, 1]; break
-                case 5: rgb = [1, f1, f2]; break
-            }
-            return rgb.map(x => x + v);
-        },
-        rgb2hsv = (rgb) => {
-            let [r, g, b] = rgb;
-            const min = Math.min(r, g, b),
-                max = Math.max(r, g, b);
-
-            if (max === 0)
-                return [0, 0, 0];
-
-            let v = max / 2.55;
-
-            if (max === min)
-                return [0, 0, v];
-
-            let h = 60;
-
-            const d = max - min;
-            let s = d / max * 100;
-
-            if (r === max) h *= (g - b) / d;
-            if (g === max) h *= 2 + (b - r) / d;
-            if (b === max) h *= 4 + (r - g) / d;
-
-            return [hue_correction(h), s, v];
+    }, rgb2hsl = (rgb) => {
+        let [r, g, b] = rgb;
+        const min = Math.min(r, g, b);
+        const max = Math.max(r, g, b);
+        let d = max - min,
+            t = max + min;
+        const l = t / 5.1;
+        let h = 60;
+        t /= 255;
+        if (d === 0)
+            return [0, 0, l];
+        let s = d / (l < 50 ? t : 2 - t) / 2.55;
+        if (r == max) h *= (g - b) / d;
+        else if (g == max) h *= 2 + (b - r) / d;
+        else if (b == max) h *= 4 + (r - g) / d;
+        return [hue_correction(h), s, l];
+    }, hsv2rgb = (hsv) => {
+        let [h, s, v] = hsv;
+        v *= 2.55;
+        if (s === 0) return [v, v, v];
+        let n = hue_correction(h) / 60;
+        const d = Math.floor(n);
+        const f0 = n - d;
+        const f1 = v * s / 100;
+        const f2 = f1 * f0;
+        const f3 = f1 - f2;
+        let rgb = [0, 0, 0];
+        switch (d) {
+            case 0: rgb = [1, f3, f1]; break
+            case 1: rgb = [f2, 1, f1]; break
+            case 2: rgb = [f1, 1, f3]; break
+            case 3: rgb = [f1, f2, 1]; break
+            case 4: rgb = [f3, f1, 1]; break
+            case 5: rgb = [1, f1, f2]; break
         }
+        return rgb.map(x => x + v);
+    }, rgb2hsv = (rgb) => {
+        let [r, g, b] = rgb;
+        const min = Math.min(r, g, b),
+            max = Math.max(r, g, b);
+        if (max === 0)
+            return [0, 0, 0];
+        let v = max / 2.55;
+        if (max === min)
+            return [0, 0, v];
+        let h = 60;
+        const d = max - min;
+        let s = d / max * 100;
+        if (r === max) h *= (g - b) / d;
+        if (g === max) h *= 2 + (b - r) / d;
+        if (b === max) h *= 4 + (r - g) / d;
+        return [hue_correction(h), s, v];
+    };
 
     var bluedye = function (color) {
         return new localBlueDye.color(color);
@@ -213,43 +196,35 @@
         },
         cyan: function (cyan) {
             let [c, m, y, k] = this.cmyk();
-            [this.RED, this.GREEN, this.BLUE] = cmyk2rgb([cyan, m, y, k]);
-            return this.save();
+            return this.rgb(...cmyk2rgb([cyan, m, y, k]));
         },
         yellow: function (yellow) {
             let [c, m, y, k] = this.cmyk();
-            [this.RED, this.GREEN, this.BLUE] = cmyk2rgb([c, m, yellow, k]);
-            return this.save();
+            return this.rgb(...cmyk2rgb([c, m, yellow, k]));
         },
         magenta: function (magenta) {
             let [c, m, y, k] = this.cmyk();
-            [this.RED, this.GREEN, this.BLUE] = cmyk2rgb([c, magenta, y, k]);
-            return this.save();
+            return this.rgb(...cmyk2rgb([c, magenta, y, k]));
         },
         black: function (black) {
             let [c, m, y, k] = this.cmyk();
-            [this.RED, this.GREEN, this.BLUE] = cmyk2rgb([c, m, y, black]);
-            return this.save();
+            return this.rgb(...cmyk2rgb([c, m, y, black]));
         },
         hue: function (hue) {
             let [h, s, l] = this.hsl();
-            [this.RED, this.GREEN, this.BLUE] = hsl2rgb([hue, s, l]);
-            return this.save();
+            return this.rgb(...hsl2rgb([hue, s, l]));
         },
         saturation: function (saturation) {
             let [h, s, l] = this.hsl();
-            [this.RED, this.GREEN, this.BLUE] = hsl2rgb([h, saturation, l]);
-            return this.save();
+            return this.rgb(...hsl2rgb([h, saturation, l]));
         },
         lightness: function (lightness) {
             let [h, s, l] = this.hsl();
-            [this.RED, this.GREEN, this.BLUE] = hsl2rgb([h, s, lightness]);
-            return this.save();
+            return this.rgb(...hsl2rgb([h, s, lightness]));
         },
         value: function (value) {
             let [h, s, v] = this.hsv();
-            [this.RED, this.GREEN, this.BLUE] = hsv2rgb([h, s, value]);
-            return this.save();
+            return this.rgb(...hsv2rgb([h, s, value]));
         },
         rgb: function (r, g, b) {
             [this.RED, this.GREEN, this.BLUE] = [r, g, b].map(correction);
@@ -270,9 +245,20 @@
             [this.RED, this.GREEN, this.BLUE] = this.toArray().map(x => _light(x, level));
             return this.save();
         },
+        desaturate: function (level = 1) {
+            level = Math.min(Math.max(level, 0), 100);
+            return this.saturation(_dark(this.hsl()[1] * 2.55, level) / 2.55);
+        },
+        saturate: function (level = 1) {
+            level = Math.min(Math.max(level, 0), 100);
+            return this.saturation(_light(this.hsl()[1] * 2.55, level) / 2.55);
+        },
         negative: function () {
             [this.RED, this.GREEN, this.BLUE] = this.toArray().map(x => (255 - x));
             return this.save();
+        },
+        rotate: function (degree) {
+            return this.hue(this.hsl()[0] + degree);
         },
         redToBlue: function () {
             [this.BLUE, this.RED, this.GREEN] = this.toArray();
@@ -318,6 +304,19 @@
         hsl: function () {
             return rgb2hsl(this.toArray());
         },
+
+
+        // experimental functions
+
+        optimize: function () {
+            let [h, s, l] = this.hsl();
+            let $s = _optimum(s, l, 10, 3, 10),
+                $l = _optimum(l, 100 - s, 10, 3, 10);
+            return this.rgb(...hsl2rgb([h, $s, $l]))
+        },
+
+        // end of experimental functions
+
         setTag: function (tag) {
             if (this.tag) delete _private.tags[this.tag];
             _private.tags[tag] = this;

@@ -27,17 +27,17 @@
     </div>
     <div class="groups">
         <div class="group">
-            <div @click="color.negative()" :style="'background-color:'+bluedye(color.css()).negative().css()">
+            <div @click="color.negative()" :style="'background-color:'+bluedye(color.toArray()).negative().css()">
                 color.negative()</div>
-            <div @click="color.gray()" :style="'background-color:'+bluedye(color.css()).gray().css()">
+            <div @click="color.gray()" :style="'background-color:'+bluedye(color.toArray()).gray().css()">
                 color.grey()</div>
-            <div @click="color.redToBlue()" :style="'background-color:'+bluedye(color.css()).redToBlue().css()">
+            <div @click="color.redToBlue()" :style="'background-color:'+bluedye(color.toArray()).redToBlue().css()">
                 color.redToBlue()</div>
-            <div @click="color.blueToRed()" :style="'background-color:'+bluedye(color.css()).blueToRed().css()">
+            <div @click="color.blueToRed()" :style="'background-color:'+bluedye(color.toArray()).blueToRed().css()">
                 color.blueToRed()</div>
             <div @click="color.undo()" :style="'background-color:'+oldcolor">
                 color.undo()</div>
-            <div @click="color.random()" :style="'background-color:'+bluedye(color.css()).random().css()">
+            <div @click="color.random()" :style="'background-color:'+bluedye(color.toArray()).random().css()">
                 color.random()</div>
             <div @click="color.reset()" :style="'background-color:'+bluedye(color.R).css()">
                 color.reset()</div>
@@ -46,32 +46,32 @@
         </div>
         <div class="group">
             <div>
-                <div @click="color.light(light)" :style="'background-color:'+bluedye(color.css()).light(light).css()">
+                <div @click="color.light(light)" :style="'background-color:'+bluedye(color.toArray()).light(light).css()">
                     color.light({{ light }})</div>
                 <input v-model="light" max="100" min="0" type="number">
             </div>
             <div>
-                <div @click="color.dark(dark)" :style="'background-color:'+bluedye(color.css()).dark(dark).css()">
+                <div @click="color.dark(dark)" :style="'background-color:'+bluedye(color.toArray()).dark(dark).css()">
                     color.dark({{ dark }})</div>
                 <input v-model="dark" max="100" min="0" type="number">
             </div>
             <div>
-                <div @click="color.red(red)" :style="'background-color:'+bluedye(color.css()).red(red).css()">
+                <div @click="color.red(red)" :style="'background-color:'+bluedye(color.toArray()).red(red).css()">
                     color.red({{ red }})</div>
                 <input v-model="red" max="255" min="0" type="number">
             </div>
             <div>
-                <div @click="color.green(green)" :style="'background-color:'+bluedye(color.css()).green(green).css()">
+                <div @click="color.green(green)" :style="'background-color:'+bluedye(color.toArray()).green(green).css()">
                     color.green({{ green }})</div>
                 <input v-model="green" max="255" min="0" type="number">
             </div>
             <div>
-                <div @click="color.blue(blue)" :style="'background-color:'+bluedye(color.css()).blue(blue).css()">
+                <div @click="color.blue(blue)" :style="'background-color:'+bluedye(color.toArray()).blue(blue).css()">
                     color.blue({{ blue }})</div>
                 <input v-model="blue" max="255" min="0" type="number">
             </div>
             <div>
-                <div @click="color.alpha(alpha)" :style="'background-color:'+bluedye(color.css()).alpha(alpha).css()">
+                <div @click="color.alpha(alpha)" :style="'background-color:'+bluedye(color.toArray()).alpha(alpha).css()">
                     color.alpha({{ alpha }})</div>
                 <input v-model="alpha" type="number">
             </div>
